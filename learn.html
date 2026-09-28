@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn | Z-Foundation</title>
+<style>
+:root{--bg:#fbf8f1;--ink:#2b2a26;--mute:#8a867a;--line:#e3ddcc;--green:#4f8a3c;--green-d:#3b6b2b;--card:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#1d1f1a;--ink:#f1eee4;--mute:#a09c8e;--line:#3a3d34;--green:#6aa84f;--green-d:#4d8438;--card:#272a23}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.4 "Trebuchet MS","Segoe UI",sans-serif;padding:18px}
+.box{max-width:480px;margin:0 auto;background:var(--card);border:2px solid var(--line);border-radius:22px;overflow:hidden}
+.head{background:var(--green);color:#fff;padding:18px 20px}
+.head h1{margin:0;font-size:1.4rem}.head p{margin:4px 0 0;opacity:.9;font-size:.95rem}
+.path{padding:26px 20px 34px;display:flex;flex-direction:column;gap:22px}
+.node{width:78px;height:78px;border-radius:50%;border:0;border-bottom:7px solid var(--green-d);background:var(--green);color:#fff;font:700 1.6rem inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.node.locked{background:var(--line);border-bottom-color:var(--mute);color:var(--mute);cursor:not-allowed}
+.node.done{background:#d9a93a;border-bottom-color:#a67c1f}
+.row{display:flex;align-items:center;gap:14px}
+.row span{font-size:.95rem;color:var(--mute)}
+.row:nth-child(2){margin-left:50px}.row:nth-child(3){margin-left:85px}.row:nth-child(4){margin-left:50px}
+.reset{display:block;margin:16px auto 0;background:none;border:0;color:var(--mute);font:inherit;font-size:.85rem;cursor:pointer;text-decoration:underline}
+.node:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="box">
+ <div class="head"><h1>Chapter 1: Biomes</h1><p>Finish each lesson to unlock the next.</p></div>
+ <div class="path" id="path"></div>
+</div>
+<button class="reset" id="reset">Reset progress</button>
+<script>
+const T=["Deserts","Tundra","Rain forests","Mangroves","Biome review"];
+let done=[];try{done=JSON.parse(localStorage.getItem("zf_done")||"[]")}catch(e){}
+const p=document.getElementById("path");
+T.forEach((t,k)=>{
+ const n=k+1,isDone=done.includes(n),open=n===1||done.includes(n-1);
+ const r=document.createElement("div");r.className="row";
+ const el=document.createElement(open?"a":"div");
+ el.className="node"+(isDone?" done":open?"":" locked");
+ el.textContent=isDone?"★":open?n:"🔒";
+ if(open){el.href="lesson.html?n="+n}else el.setAttribute("aria-label","Locked")
+ r.append(el);const s=document.createElement("span");s.textContent=t;r.append(s);p.append(r);
+});
+document.getElementById("reset").onclick=()=>{try{localStorage.removeItem("zf_done")}catch(e){}location.reload()};
+</script>
+</body>
+</html>
