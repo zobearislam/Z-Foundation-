@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hubble: The Eye That Fixed Its Vision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,500;1,300&family=Archivo:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}}
+:root[data-theme="light"]{--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}
+:root[data-theme="dark"]{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 1.2rem/1.65 Newsreader,Georgia,serif}
+.gauge{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);
+padding:.6rem 1.2rem;display:flex;justify-content:space-between;align-items:baseline;font:500 .8rem Archivo,system-ui,sans-serif;color:var(--dim)}
+.gauge b{font:800 1.5rem Archivo,system-ui,sans-serif;color:var(--acc);font-variant-numeric:tabular-nums}
+header{padding:22vh 1.4rem 16vh;max-width:40rem;margin:auto}
+h1{font:800 clamp(2.6rem,11vw,5rem)/.98 Archivo,system-ui,sans-serif;margin:0 0 1.5rem;letter-spacing:-.03em}
+header p{color:var(--dim);font-style:italic;margin:0}
+section{max-width:40rem;margin:auto;padding:14vh 1.4rem;border-top:1px solid var(--rule)}
+h2{margin:0 0 .3rem}
+.hl{all:unset;cursor:pointer;display:inline-block;background:var(--acc);color:var(--bg);padding:.1em .45em;font:800 1.9rem/1.15 Archivo,system-ui,sans-serif;letter-spacing:-.02em}
+.hl:focus-visible,.all:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hl::after{content:" +";font-weight:500}.hl[aria-expanded=true]::after{content:" \2212"}
+.when{font:500 .9rem Archivo,system-ui,sans-serif;color:var(--acc);margin:0 0 1.6rem}
+p{margin:0 0 1.2rem}
+.frame{border-left:2px solid var(--acc);padding-left:1rem;color:var(--dim);font-style:italic;font-size:1rem;margin-top:1.8rem}
+.big{font-size:1.55rem;line-height:1.35;font-weight:500}
+.extra{display:none;margin-top:2rem;padding-top:1.4rem;border-top:1px dashed var(--acc)}.extra.open{display:block}
+.extra h3{font:800 1.15rem Archivo,system-ui,sans-serif;color:var(--acc);margin:1.8rem 0 .4rem}
+.extra p,.extra li{font-size:1.08rem}.extra ul{padding-left:1.2rem;margin:0 0 1.2rem}
+.all{all:unset;cursor:pointer;margin-top:1.6rem;display:inline-block;border:1px solid var(--acc);color:var(--acc);padding:.4rem .9rem;font:500 .9rem Archivo,system-ui,sans-serif}
+footer{max-width:40rem;margin:auto;padding:12vh 1.4rem 18vh;border-top:1px solid var(--rule);color:var(--dim);font-size:1rem}
+</style>
+</head>
+<body>
+<div class="gauge"><span>Year</span><b id="yr">1946</b></div>
+
+<header>
+<h1>Hubble</h1>
+<p>A telescope built to escape the atmosphere, launched with a flawed mirror, and repaired by astronauts in orbit. Then it changed what we know about the universe.</p>
+<button class="all" id="all">Open every chapter</button>
+</header>
+
+<section data-y="1946">
+<h2><button class="hl" aria-expanded="false">The idea</button></h2>
+<p class="when">1946</p>
+<p>The astronomer Lyman Spitzer saw the problem with every telescope on the ground. Air blurs starlight into a twinkle and blocks much of the ultraviolet and infrared entirely. In 1946 he wrote that a telescope above the atmosphere could see far more, and he spent the next three decades pushing for one.</p>
+<div class="frame">Visual: a night sky wobbling through the atmosphere, then the same star, perfectly still.</div>
+<div class="extra">
+<h3>The problem</h3><p>Turbulence limits even the best ground telescopes to a fuzz about a second of arc across, and the atmosphere absorbs most ultraviolet light and much infrared. Space offers a steady view of every wavelength.</p>
+<h3>The campaign</h3><p>Spitzer argued for a large space telescope for decades, and the National Academy of Sciences backed it in the 1960s. Nancy Grace Roman, NASA's first chief of astronomy, worked with scientists to build support, and is often called the mother of Hubble.</p>
+<h3>Small steps first</h3><p>Orbiting observatories in the 1960s and 70s proved that pointing instruments precisely from space was possible. Congress approved the Large Space Telescope in 1977.</p>
+<h3>The name</h3><p>It honors Edwin Hubble, who showed in the 1920s that many of the fuzzy nebulae were separate galaxies, and in 1929 that the more distant ones are moving away faster.</p>
+</div>
+</section>
+
+<section data-y="1977">
+<h2><button class="hl" aria-expanded="false">Building it</button></h2>
+<p class="when">1977 to 1989</p>
+<p>The design called for a 2.4-metre mirror, the biggest that would fit in the cargo bay of the space shuttle. It would be serviced by astronauts, refreshed with new instruments over its lifetime. Launch was planned for 1983, then 1986.</p>
+<p>Then the shuttle Challenger was lost, and every flight was grounded.</p>
+<div class="frame">Visual: a giant mirror being polished in a cleanroom. Technicians in white suits.</div>
+<div class="extra">
+<h3>Who built what</h3><ul><li>The primary mirror was ground by Perkin-Elmer, from glass with very low thermal expansion</li><li>Lockheed built the spacecraft body</li><li>The European Space Agency supplied the solar arrays and one of the original cameras, and took a share of the observing time</li><li>NASA's Goddard and Marshall centers ran the project</li></ul>
+<h3>The size</h3><p>About 13 metres long and 11,000 kilograms, roughly a school bus. It orbits about 540 kilometres up, circling the Earth every 95 minutes or so at nearly 28,000 kilometres an hour.</p>
+<h3>Designed for repair</h3><p>Handrails, grapple points and instruments in modular boxes made the telescope serviceable by spacewalking astronauts. That decision would save the mission.</p>
+<h3>The wait</h3><p>After Challenger, the finished telescope waited years in a cleanroom. The delay gave engineers time to test, but also allowed the mirror flaw to go unnoticed a little longer.</p>
+</div>
+</section>
+
+<section data-y="1990">
+<h2><button class="hl" aria-expanded="false">First light, and a flaw</button></h2>
+<p class="when">April 1990</p>
+<p>Hubble launched on April 24, 1990, aboard the shuttle Discovery, and was released into orbit the next day. When the first pictures arrived, they were wrong. Stars were surrounded by soft halos, not sharp points.</p>
+<p>The mirror had been polished with great precision, but to the wrong shape.</p>
+<div class="frame">Visual: a star as a blurry smear. Then a diagram of the mirror's edge, slightly off.</div>
+<div class="extra">
+<h3>How wrong?</h3><p>The edge of the primary mirror was too flat by about 2 micrometres, roughly one fiftieth the width of a human hair. That was enough to cause spherical aberration, which blurs light from the edge and center to different focal points.</p>
+<h3>The cause</h3><p>The instrument used to test the mirror during grinding had been assembled with a lens about 1.3 millimetres out of position. The mirror was made perfectly to match the faulty test. Other checks that would have found the problem had been set aside.</p>
+<h3>Public embarrassment</h3><p>The telescope had cost billions and taken years, and it became the target of jokes and hearings in Congress. Astronomers still used clever image processing to do some science with the blurred data.</p>
+<h3>The fix takes shape</h3><p>Because the error was so precise and well understood, engineers could design corrective optics: glasses for the telescope, to be installed by astronauts.</p>
+</div>
+</section>
+
+<section data-y="1993">
+<h2><button class="hl" aria-expanded="false">The repair</button></h2>
+<p class="when">December 1993</p>
+<p>Seven astronauts flew to Hubble aboard Endeavour. Over five spacewalks, they installed a new camera with corrective optics built in, and a set of small mirrors to correct the older instruments.</p>
+<p class="big">The first sharp images arrived weeks later. The stars were points again.</p>
+<div class="frame">Visual: two images of the same galaxy core, before and after.</div>
+<div class="extra">
+<h3>The mission</h3><ul><li>Endeavour mission STS-61, December 2 to 13, 1993</li><li>Spacewalkers included Story Musgrave, Jeffrey Hoffman, Kathryn Thornton and Tom Akers, with Claude Nicollier of ESA operating the robot arm</li><li>It was one of the most complex shuttle missions attempted to that date</li></ul>
+<h3>The new eyes</h3><p>The Wide Field and Planetary Camera 2 had mirrors that cancelled the flaw before light reached its sensors. COSTAR, a box of small correcting mirrors, replaced another instrument to fix the light going to the spectrographs.</p>
+<h3>Other work</h3><p>The crew also swapped the solar arrays, which had been flexing as the telescope passed from day to night, and replaced gyroscopes.</p>
+<h3>The result</h3><p>NASA announced the success in January 1994. Later instruments carried their own corrections, so COSTAR was eventually removed.</p>
+</div>
+</section>
+
+<section data-y="1995">
+<h2><button class="hl" aria-expanded="false">Deep field</button></h2>
+<p class="when">December 1995</p>
+<p>The director of the institute that runs Hubble, Robert Williams, made a risky decision. He used ten days of his own discretionary observing time to stare at a patch of sky that looked empty.</p>
+<p>The image showed about 3,000 galaxies in a space that a grain of sand could cover at arm's length.</p>
+<div class="frame">Visual: black, then galaxies bloom across the frame, thousands of them.</div>
+<div class="extra">
+<h3>The idea</h3><p>Many astronomers advised against spending so much time on nothing. Williams argued that an empty patch was still a sample of the universe, and would show what it held at great distance and in the distant past.</p>
+<h3>The image</h3><p>Hubble took several hundred exposures over ten days as it orbited, in four colors. The data was released to everyone right away, so other teams could study it.</p>
+<h3>Deeper and deeper</h3><ul><li>The Ultra Deep Field, in 2003 and 2004, held about 10,000 galaxies</li><li>The eXtreme Deep Field, combining a decade of data in 2012, reached even fainter galaxies</li><li>In 2016 Hubble measured a galaxy seen as it was only about 400 million years after the Big Bang</li></ul>
+<h3>What it showed</h3><p>Early galaxies were smaller, clumpier and more irregular than today's, and they grew by merging. Many of the objects were seen as they were billions of years ago.</p>
+</div>
+</section>
+
+<section data-y="1998">
+<h2><button class="hl" aria-expanded="false">The expanding universe</button></h2>
+<p class="when">1990s to today</p>
+<p>Hubble was built partly to measure how fast the universe expands, and how old it is. In the late 1990s two teams used it to observe distant exploding stars, and found that the expansion is speeding up.</p>
+<p>Something is pushing space apart. It was named dark energy.</p>
+<div class="frame">Visual: galaxies drifting apart, faster and faster, on a curve.</div>
+<div class="extra">
+<h3>The Key Project</h3><p>A team led by Wendy Freedman used Hubble to find Cepheid variable stars in nearby galaxies. Their brightness reveals distance, and combined with the galaxies' speed, gives the expansion rate. Their result, around 2001, narrowed a long dispute over the age of the universe.</p>
+<h3>Dark energy</h3><p>In 1998 two competing teams found that distant supernovae were fainter than expected, meaning the universe had been expanding faster over time. Hubble followed up on many of the supernovae. Saul Perlmutter, Brian Schmidt and Adam Riess shared the 2011 Nobel Prize in Physics.</p>
+<h3>Black holes</h3><p>Hubble found evidence that supermassive black holes sit at the center of most large galaxies, and that their mass is linked to the size of the galaxy around them.</p>
+<h3>A new puzzle</h3><p>Hubble measurements of the expansion rate today come out higher than the rate predicted from the early universe. The mismatch, called the Hubble tension, is still unresolved.</p>
+</div>
+</section>
+
+<section data-y="2001">
+<h2><button class="hl" aria-expanded="false">Nearer worlds</button></h2>
+<p class="when">1994 to today</p>
+<p>Hubble also watched our own neighborhood. It saw fragments of a comet slam into Jupiter in 1994, imaged pillars of gas where stars are being born, and found the first chemical signs in the atmosphere of a planet around another star.</p>
+<div class="frame">Visual: the dark scar on Jupiter. Then the gas pillars in green, gold and rust.</div>
+<div class="extra">
+<h3>Comet Shoemaker-Levy 9</h3><p>In July 1994 more than twenty fragments of a broken comet hit Jupiter over about a week. Hubble recorded the dark scars, the first time a collision between two solar system bodies was seen live.</p>
+<h3>The Pillars of Creation</h3><p>The 1995 image of towers of gas and dust in the Eagle Nebula, where new stars are forming, became one of the best-known astronomical pictures. Hubble revisited it in 2014 in higher resolution.</p>
+<h3>Exoplanets</h3><p>In 2001 Hubble detected sodium in the atmosphere of the planet HD 209458 b as it passed in front of its star, the first atmosphere detected around a planet outside our solar system. Later work found water vapor and other gases on other worlds.</p>
+<h3>Pluto and beyond</h3><p>Hubble found several of Pluto's small moons between 2005 and 2012, helping to plan the route for the New Horizons flyby in 2015.</p>
+</div>
+</section>
+
+<section data-y="2009">
+<h2><button class="hl" aria-expanded="false">Five house calls</button></h2>
+<p class="when">1993 to 2009</p>
+<p>Hubble was visited by astronauts five times. Each mission replaced worn parts and added better instruments, so the telescope grew more powerful with age.</p>
+<p>The last visit, in May 2009, left it in the best shape of its life.</p>
+<div class="frame">Visual: a spacewalker on the end of the arm, with the Earth turning below.</div>
+<div class="extra">
+<h3>The missions</h3><ul><li>1993: corrective optics (STS-61, Endeavour)</li><li>1997: two new instruments for infrared and spectroscopy (STS-82, Discovery)</li><li>1999: new gyroscopes after several failed (STS-103, Discovery)</li><li>2002: the Advanced Camera for Surveys and new solar arrays (STS-109, Columbia)</li><li>2009: Wide Field Camera 3, the Cosmic Origins Spectrograph, new batteries and gyros (STS-125, Atlantis)</li></ul>
+<h3>Almost cancelled</h3><p>After the loss of Columbia in 2003, NASA's leadership judged another visit too dangerous, and cancelled it. Public and scientific pressure led to its reinstatement, with a rescue shuttle on standby in case of emergency.</p>
+<h3>The end of the visits</h3><p>The shuttle was the only vehicle able to reach Hubble. After the shuttle fleet retired in 2011, no further repairs were possible. The 2009 mission added a fitting for a future robotic spacecraft to grab it.</p>
+</div>
+</section>
+
+<section data-y="2026">
+<h2><button class="hl" aria-expanded="false">Now</button></h2>
+<p class="when">2026</p>
+<p>Hubble has been in orbit for more than 36 years, and has contributed to tens of thousands of scientific papers. It works alongside the James Webb Space Telescope, which sees infrared light, while Hubble covers visible and ultraviolet.</p>
+<p>But it is aging.</p>
+<div class="frame">Visual: the telescope, small against the curve of the Earth. Then a slow fade to the stars.</div>
+<div class="extra">
+<h3>Running on fewer gyros</h3><p>Hubble points using gyroscopes, and several have failed. Since 2024 it has operated with just one active gyro, with a spare in reserve. This works, but reduces observing time and limits how well it can track fast-moving objects.</p>
+<h3>A slowly falling orbit</h3><p>Thin air at Hubble's altitude drags on it, and the orbit slowly decays, faster when the Sun is active. Left alone, NASA expects it to reenter the atmosphere sometime in the 2030s. Options for a boost or a controlled deorbit have been studied, and the latest news is worth checking on NASA's Hubble site.</p>
+<h3>Working with Webb</h3><p>Hubble and Webb are often pointed at the same target, so the visible and infrared views can be combined into a fuller picture.</p>
+<h3>What it changed</h3><p>Hubble made astronomy visual for the public, helped fix the age and expansion of the universe, revealed dark energy, and showed us galaxies from when the universe was young. Its data is public, so it will keep producing science after the telescope itself is gone.</p>
+</div>
+</section>
+
+<footer>
+Facts drawn from NASA, ESA and Space Telescope Science Institute records. Details about Hubble's current status change over time; NASA's Hubble mission page has the latest.
+</footer>
+
+<script>
+(function(){
+var el=document.getElementById('yr'),cur=1946,target=1946,raf;
+function tick(){cur+=(target-cur)*.1;if(Math.abs(target-cur)<.5)cur=target;el.textContent=Math.round(cur);if(cur!==target)raf=requestAnimationFrame(tick)}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){target=parseFloat(e.target.dataset.y);cancelAnimationFrame(raf);
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){cur=target;el.textContent=target}else{tick()}}})},{rootMargin:'-45% 0px -45% 0px'});
+document.querySelectorAll('section[data-y]').forEach(function(s){io.observe(s)});
+document.querySelectorAll('.hl').forEach(function(b){b.addEventListener('click',function(){var x=b.closest('section').querySelector('.extra');var o=x.classList.toggle('open');b.setAttribute('aria-expanded',o)})});
+var all=document.getElementById('all'),open=false;
+all.addEventListener('click',function(){open=!open;document.querySelectorAll('.extra').forEach(function(x){x.classList.toggle('open',open)});document.querySelectorAll('.hl').forEach(function(b){b.setAttribute('aria-expanded',open)});all.textContent=open?'Close every chapter':'Open every chapter'});
+})();
+</script>
+</body>
+</html>
