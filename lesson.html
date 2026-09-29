@@ -1,106 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lesson | Z-Foundation</title>
 <style>
-:root{--bg:#fbf8f1;--ink:#2b2a26;--mute:#8a867a;--line:#e3ddcc;--green:#4f8a3c;--green-d:#3b6b2b;--red:#c5443a;--red-bg:#fbe3e0;--ok-bg:#e4f2d8;--card:#fff}
-@media(prefers-color-scheme:dark){:root{--bg:#1d1f1a;--ink:#f1eee4;--mute:#a09c8e;--line:#3a3d34;--green:#6aa84f;--green-d:#4d8438;--red:#e0645a;--red-bg:#3d2320;--ok-bg:#26381e;--card:#272a23}}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-body{background:var(--bg);color:var(--ink);font:18px/1.4 "Trebuchet MS","Segoe UI",sans-serif;display:flex;flex-direction:column;max-width:640px;margin:0 auto}
-header{display:flex;align-items:center;gap:14px;padding:18px 18px 8px}
-.x{color:var(--mute);text-decoration:none;font-size:1.4rem}
-.bar{flex:1;height:14px;background:var(--line);border-radius:9px;overflow:hidden}
-.fill{height:100%;width:0;background:var(--green);border-radius:9px;transition:width .4s}
-.hearts{font-weight:700;color:var(--red);min-width:44px;text-align:right}
-main{flex:1;padding:18px;overflow-y:auto}
-h1{font-size:1.5rem;margin:0 0 6px}h2{font-size:1.35rem;margin:0 0 18px}
-.sub{color:var(--mute);margin:0 0 22px}
-.opt{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-bottom-width:5px;border-radius:14px;padding:14px 16px;margin-bottom:12px;cursor:pointer}
-.opt:hover{border-color:var(--green)}
-.opt.sel,.opt.right{border-color:var(--green);background:var(--ok-bg)}
-.opt.wrong{border-color:var(--red);background:var(--red-bg)}
-.opt:disabled{cursor:default}
-.emoji{font-size:3rem;margin:4px 0 10px}
-footer{padding:16px 18px calc(16px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--line)}
-footer.ok{background:var(--ok-bg)}footer.bad{background:var(--red-bg)}
-.msg{font-weight:700;margin:0 0 12px;min-height:1.4em}
-footer.ok .msg{color:var(--green-d)}footer.bad .msg{color:var(--red)}
-.go{width:100%;font:inherit;font-weight:700;letter-spacing:.03em;color:#fff;background:var(--green);border:0;border-bottom:5px solid var(--green-d);border-radius:14px;padding:14px;cursor:pointer}
-.go:disabled{background:var(--line);border-bottom-color:var(--line);color:var(--mute);cursor:default}
-footer.bad .go{background:var(--red);border-bottom-color:#8f2d26}
-.end{text-align:center;padding-top:30px}
-button:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-</style>
-</head>
-<body>
-<header><a class="x" href="learn.html" aria-label="Exit lesson">✕</a><div class="bar"><div class="fill" id="fill"></div></div><div class="hearts" id="hearts">♥ 3</div></header>
-<main id="main"></main>
-<footer id="foot"><p class="msg" id="msg"></p><button class="go" id="go"></button></footer>
+:root{--bg:#070b16;--card:#101628;--line:#26314f;--ink:#e8ecf5;--dim:#9aa6c0;--acc:#7fd4c8;--ok:#58cc02;--bad:#ff6b6b}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 "Trebuchet MS","Segoe UI",system-ui,sans-serif}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:640px;margin:0 auto}
+.top{display:flex;align-items:center;gap:14px;padding:14px 16px}
+.x{color:var(--dim);font-size:30px;line-height:1;text-decoration:none}
+.bar{flex:1;height:14px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .3s}
+.hearts{color:var(--bad);font-weight:700}
+main{flex:1;overflow:auto;padding:12px 20px 20px}
+h1{font-size:24px;line-height:1.3;margin:8px 0 20px}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:15px 16px;margin:0 0 12px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:rgba(127,212,200,.12)}
+.opt.right{border-color:var(--ok);background:rgba(88,204,2,.14)}
+.opt.wrong{border-color:var(--bad);background:rgba(255,107,107,.14)}
+input{width:100%;font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:14px;padding:15px 16px}
+input:focus{outline:none;border-color:var(--acc)}
+footer{padding:14px 20px calc(16px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--line)}
+footer.ok{background:rgba(88,204,2,.14);border-color:var(--ok)}footer.bad{background:rgba(255,107,107,.14);border-color:var(--bad)}
+#fb{margin-bottom:10px;min-height:0}#fb b{display:block;font-size:19px}#fb span{color:var(--dim);font-size:15px}
+footer.ok #fb b{color:var(--ok)}footer.bad #fb b{color:var(--bad)}
+#go{width:100%;font:inherit;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#06121a;background:var(--ok);border:0;border-bottom:4px solid #3f9600;border-radius:14px;padding:14px;cursor:pointer}
+#go:disabled{background:var(--line);border-bottom-color:#1a2340;color:var(--dim);cursor:default}
+footer.bad #go{background:var(--bad);border-bottom-color:#c94a4a}
+.end{text-align:center;padding-top:40px}.end .big{font-size:64px}
+.stats{display:flex;gap:12px;justify-content:center;margin:24px 0}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 20px}.stat b{display:block;font-size:24px;color:var(--acc)}.stat span{font-size:13px;color:var(--dim)}
+.end a{display:inline-block;color:#06121a;background:var(--ok);text-decoration:none;font-weight:700;padding:14px 28px;border-radius:14px;border-bottom:4px solid #3f9600;text-transform:uppercase}
+</style></head><body>
+<div id="app">
+<div class="top"><a class="x" href="lessons.html" aria-label="Exit lesson">×</a><div class="bar"><i id="fill"></i></div><div class="hearts" id="hearts"></div></div>
+<main id="stage"></main>
+<footer id="foot"><div id="fb"></div><button id="go" disabled>Check</button></footer>
+</div>
 <script>
-const L={
-1:{t:"Deserts",e:"🏜️",intro:"Deserts are biomes defined by how little rain they get. Let's see what lives there.",q:[
- {q:"Which best describes a desert?",o:["Very little rain","Rain every day","Frozen all year","Flooded by the tide"],a:0,why:"Deserts get under about 250 mm of rain a year."},
- {q:"True or false: all deserts are hot.",o:["True","False"],a:1,why:"Antarctica is a cold desert. It is dry, not hot."},
- {q:"How do cactus plants survive dry weather?",o:["They store water in thick stems","They grow huge thin leaves","They live underwater","They need daily rain"],a:0,why:"Thick stems hold water for long dry periods."}]},
-2:{t:"Tundra",e:"❄️",intro:"The tundra is cold, windswept and treeless. Ready?",q:[
- {q:"What is permafrost?",o:["Ground frozen all year","A tall tree","Salty tidal mud","A desert wind"],a:0,why:"Permafrost is ground that stays frozen for two or more years."},
- {q:"True or false: the tundra is covered in tall, dense forests.",o:["True","False"],a:1,why:"Frozen soil keeps trees out. Plants stay low, like mosses and lichens."},
- {q:"What is the tundra's summer like?",o:["Hot and wet","Short and cool","Long and tropical","Rainy every day"],a:1,why:"Tundra summers are brief and cool, so plants have little time to grow."}]},
-3:{t:"Rain forests",e:"🌴",intro:"Rain forests are warm, wet and packed with life.",q:[
- {q:"Which biome has the most species on land?",o:["Tundra","Desert","Rain forest","Grassland"],a:2,why:"Warm, wet weather all year supports huge biodiversity."},
- {q:"What is the canopy?",o:["The forest floor","The top layer of tree branches","A river","A type of soil"],a:1,why:"The canopy is the leafy roof formed by treetops."},
- {q:"How much rain does a rain forest get?",o:["Almost none","A little in winter","A lot, all year","Only snow"],a:2,why:"Rain forests get heavy rainfall through most of the year."}]},
-4:{t:"Mangroves",e:"🌿",intro:"Mangrove forests grow where land meets the sea.",q:[
- {q:"Where do mangrove trees grow?",o:["High mountains","Salty water along tropical coasts","Dry sand dunes","Frozen plains"],a:1,why:"They grow in salty, tidal coastal water."},
- {q:"What do mangrove roots do for young fish?",o:["Nothing","Shelter them","Freeze them","Feed them sand"],a:1,why:"The tangled roots are a safe nursery for young fish."},
- {q:"True or false: mangroves help protect coasts from storm waves.",o:["True","False"],a:0,why:"Their roots slow waves and hold soil in place."}]},
-5:{t:"Biome review",e:"🏆",intro:"Final lesson: match what you've learned.",q:[
- {q:"Cold, treeless, frozen ground:",o:["Desert","Rain forest","Tundra","Mangrove"],a:2,why:"That's the tundra."},
- {q:"Very dry, with thick-stemmed plants like cactus:",o:["Desert","Rain forest","Tundra","Mangrove"],a:0,why:"That's a desert."},
- {q:"Dense canopy and the most species:",o:["Desert","Rain forest","Tundra","Mangrove"],a:1,why:"That's the rain forest."},
- {q:"Roots standing in salty tidal water:",o:["Desert","Rain forest","Tundra","Mangrove"],a:3,why:"That's the mangrove forest."},
- {q:"Which biome has permafrost?",o:["Tundra","Desert","Mangrove","Rain forest"],a:0,why:"Permafrost is a tundra feature."}]}
-};
-const n=+new URLSearchParams(location.search).get("n")||1;
-let done=[];try{done=JSON.parse(localStorage.getItem("zf_done")||"[]")}catch(e){}
-if(!L[n]||(n>1&&!done.includes(n-1)))location.replace("learn.html");
-const D=L[n]||L[1],Q=[{intro:1},...D.q];
-let i=0,hearts=3,picked=null,checked=false,finished=false;
-const $=id=>document.getElementById(id),main=$("main"),foot=$("foot"),go=$("go"),msg=$("msg");
-const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-function show(){
- checked=false;picked=null;foot.className="";msg.textContent="";
- $("hearts").textContent="♥ "+hearts;$("fill").style.width=(i/Q.length*100)+"%";
- const q=Q[i];
- if(q.intro){main.innerHTML=`<div class="end"><div class="emoji">${D.e}</div><h1>Lesson ${n}: ${D.t}</h1><p class="sub">${D.intro}</p></div>`;go.textContent="START";go.disabled=false;return}
- main.innerHTML=`<h2>${esc(q.q)}</h2>`+q.o.map((t,k)=>`<button class="opt" data-k="${k}">${esc(t)}</button>`).join("");
- main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(checked)return;picked=+b.dataset.k;main.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");go.disabled=false});
- go.textContent="CHECK";go.disabled=true;
+const $=s=>document.querySelector(s),KEY="zf_progress_v1";
+const id=(new URLSearchParams(location.search).get("id")||"").replace(/[^a-z0-9_-]/gi,"");
+const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,"");
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const day=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+function load(){try{return Object.assign({xp:0,streak:0,last:"",done:{}},JSON.parse(localStorage.getItem(KEY)))}catch(e){return{xp:0,streak:0,last:"",done:{}}}}
+function save(id,xp,acc){const p=load(),t=new Date(),y=new Date(t-864e5);
+  if(p.last!==day(t)){p.streak=p.last===day(y)?p.streak+1:1;p.last=day(t)}
+  p.xp+=xp;const o=p.done[id]||{best:0,times:0};o.best=Math.max(o.best,acc);o.times++;p.done[id]=o;
+  try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
+fetch("lessons/"+id+".json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(start).catch(()=>{$("#stage").innerHTML='<h1>Lesson not found</h1><p><a style="color:var(--acc)" href="lessons.html">Back to lessons</a></p>';$("#foot").hidden=true});
+function start(L){
+  document.title=L.title+" | Z-Foundation";
+  const total=L.questions.length;let queue=L.questions.map(q=>({q,retry:false})),done=0,hearts=5,first=0,xp=0,cur=null,opts=null,picked=null,checked=false,ok=false;
+  const go=$("#go"),foot=$("#foot"),fb=$("#fb"),stage=$("#stage");
+  const upd=()=>{$("#fill").style.width=(done/total*100)+"%";$("#hearts").textContent="♥ "+hearts};
+  function show(){
+    upd();foot.className="";fb.innerHTML="";checked=false;picked=null;go.disabled=true;go.textContent="Check";
+    if(hearts<=0)return fail();if(!queue.length)return finish();
+    cur=queue[0];const q=cur.q;stage.innerHTML="";const h=document.createElement("h1");h.textContent=q.question;stage.appendChild(h);
+    if(q.type==="type"){const i=document.createElement("input");i.type="text";i.autocomplete="off";i.autocapitalize="off";i.placeholder="Type your answer";i.oninput=()=>{picked=i.value;go.disabled=!norm(i.value)};i.onkeydown=e=>{if(e.key==="Enter"&&!go.disabled)go.click()};stage.appendChild(i);i.focus();opts=null}
+    else{opts=q.type==="truefalse"?[{t:"True",ok:q.answer===true},{t:"False",ok:q.answer===false}]:shuffle(q.options.map((t,i)=>({t,ok:i===q.answer})));
+      opts.forEach(o=>{const b=document.createElement("button");b.className="opt";b.textContent=o.t;b.onclick=()=>{if(checked)return;picked=o;stage.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");go.disabled=false};o.el=b;stage.appendChild(b)})}
+  }
+  go.onclick=()=>{
+    const q=cur.q;
+    if(!checked){checked=true;let right;
+      if(q.type==="type"){ok=q.answers.map(norm).includes(norm(picked));right=q.answers[0];stage.querySelector("input").disabled=true}
+      else{ok=picked.ok;right=opts.find(o=>o.ok).t;opts.forEach(o=>{if(o.ok)o.el.classList.add("right");else if(o===picked)o.el.classList.add("wrong");o.el.disabled=true})}
+      foot.className=ok?"ok":"bad";
+      fb.innerHTML="<b></b><span></span>";fb.querySelector("b").textContent=ok?["Nice work!","Correct!","You got it!"][Math.floor(Math.random()*3)]:"Correct answer: "+right;fb.querySelector("span").textContent=q.explain||"";
+      go.textContent="Continue";
+    }else{
+      queue.shift();
+      if(ok){done++;xp+=10;if(!cur.retry)first++}else{hearts--;queue.push({q,retry:true})}
+      show();
+    }
+  };
+  function finish(){
+    const acc=Math.round(first/total*100),bonus=first===total?5:0;xp+=bonus;save(L.id||id,xp,acc);
+    foot.hidden=true;stage.innerHTML='<div class="end"><div class="big">🎉</div><h1>Lesson complete!</h1><div class="stats"><div class="stat"><b>+'+xp+'</b><span>XP</span></div><div class="stat"><b>'+acc+'%</b><span>First try</span></div></div><a href="lessons.html">Continue</a></div>';
+  }
+  function fail(){foot.hidden=true;stage.innerHTML='<div class="end"><div class="big">💔</div><h1>Out of hearts</h1><p style="color:var(--dim)">Review and try again.</p><div class="stats"></div><a href="lesson.html?id='+id+'">Try again</a></div>'}
+  show();
 }
-function end(won){
- finished=true;$("fill").style.width="100%";foot.className="";msg.textContent="";
- if(won&&!done.includes(n)){done.push(n);try{localStorage.setItem("zf_done",JSON.stringify(done))}catch(e){}}
- main.innerHTML=won?`<div class="end"><div class="emoji">🎉</div><h1>Lesson complete!</h1><p class="sub">${n<5?"Lesson "+(n+1)+" is unlocked.":"You finished Chapter 1!"}</p></div>`
- :`<div class="end"><div class="emoji">💔</div><h1>Out of hearts</h1><p class="sub">Review and try again.</p></div>`;
- go.textContent=won?"CONTINUE":"TRY AGAIN";go.disabled=false;go.dataset.won=won?1:0;
-}
-go.onclick=()=>{
- if(finished){if(go.dataset.won==="1")location.href="learn.html";else location.reload();return}
- const q=Q[i];
- if(q.intro){i++;show();return}
- if(!checked){
-  checked=true;const ok=picked===q.a;
-  main.querySelectorAll(".opt").forEach((b,k)=>{b.disabled=true;if(k===q.a)b.classList.add("right");else if(k===picked)b.classList.add("wrong")});
-  if(ok){foot.className="ok";msg.textContent="Correct! "+q.why}else{hearts--;foot.className="bad";msg.textContent="Not quite. "+q.why;$("hearts").textContent="♥ "+hearts}
-  go.textContent="CONTINUE";return;
- }
- if(hearts<=0){end(false);return}
- i++;if(i>=Q.length)end(true);else show();
-};
-show();
-</script>
-</body>
-</html>
+</script></body></html>
