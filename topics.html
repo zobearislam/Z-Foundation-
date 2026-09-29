@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Topics | Z-Foundation</title><meta name="description" content="Learn how the universe works, one clear lesson at a time.">
-<link rel="stylesheet" href="style.css"></head><body>
+<link rel="stylesheet" href="style.css"><style>
+.tel{cursor:pointer}
+.tel-list{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.tel.open .tel-list{display:block}
+.tel-link{display:block;text-decoration:none;color:var(--ink);font-size:15px}
+.tel-link b{color:var(--acc)}
+</style>
+</head><body>
 <header><nav><a class="brand" href="index.html">Z-Foundation</a><a href="index.html">Home</a><a href="topics.html" aria-current="page">Topics</a><a href="lessons.html">Lessons</a><a href="solar-system.html">Solar System Map</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header>
 <main>
 <h1>Topics</h1><p class="lead">Everything we cover. New lessons get added here.</p>
 <div class="grid">
 <div class="card"><span class="tag live">Live</span><h3>The Solar System</h3><p>Every planet, its moons and the worlds beyond Neptune.</p><a href="solar-system.html">Open the map</a></div>
 <div class="card"><span class="tag">Coming soon</span><h3>Moons worth visiting</h3><p>Io, Europa, Titan, Triton and more.</p></div>
-<div class="card"><span class="tag">Coming soon</span><h3>Space telescopes</h3><p>How Hubble and Webb see the universe.</p></div>
+<div class="card tel"><span class="tag live">Interactive</span><h3>Telescopes</h3><p>Reveals more as we add it. Tap to open.</p>
+  <div class="tel-list"><a class="tel-link" href="voyager-documentary.html"><b>The Voyagers</b></a></div>
+</div>
 <div class="card"><span class="tag">Coming soon</span><h3>Dwarf planets</h3><p>Pluto, Eris and the Kuiper belt.</p></div>
 </div>
+<script>
+document.querySelectorAll(".tel").forEach(function(c){
+  c.addEventListener("click",function(e){if(e.target.closest(".tel-link"))return;c.classList.toggle("open")});
+});
+</script>
 </main>
 <footer>© <span id="y">2026</span> Z-Foundation. Made for curious people.</footer>
 <script>document.getElementById("y").textContent=new Date().getFullYear()</script>
