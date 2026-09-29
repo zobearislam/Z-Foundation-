@@ -1,0 +1,200 @@
+{
+  "id": "luna-2",
+  "title": "luna-2",
+  "description": "Explore the Moon’s origins, history, exploration, and future through this 20-question lesson.",
+  "icon": "🌙",
+  "questions": [
+    {
+      "type": "choice",
+      "question": "What is the Moon also called?",
+      "options": [
+        "Luna",
+        "Sol",
+        "Mars",
+        "Venus"
+      ],
+      "answer": 0,
+      "explain": "Luna is the Latin name for the Moon."
+    },
+    {
+      "type": "choice",
+      "question": "What is the Moon a natural satellite of?",
+      "options": [
+        "Mars",
+        "Earth",
+        "The Sun",
+        "Jupiter"
+      ],
+      "answer": 1,
+      "explain": "The Moon orbits Earth."
+    },
+    {
+      "type": "truefalse",
+      "question": "The Moon produces its own visible light.",
+      "answer": false,
+      "explain": "The Moon reflects sunlight."
+    },
+    {
+      "type": "choice",
+      "question": "Which event helped inspire humanity’s desire to reach the Moon?",
+      "options": [
+        "The invention of the telescope",
+        "The discovery of Antarctica",
+        "The first airplane flight",
+        "The building of the pyramids"
+      ],
+      "answer": 0,
+      "explain": "Telescopes helped people observe the Moon and learn more about it."
+    },
+    {
+      "type": "choice",
+      "question": "Which calendar is used by most countries today?",
+      "options": [
+        "Lunar calendar",
+        "Gregorian calendar",
+        "Mayan calendar",
+        "Islamic calendar"
+      ],
+      "answer": 1,
+      "explain": "The Gregorian calendar is the internationally used civil calendar."
+    },
+    {
+      "type": "truefalse",
+      "question": "The Gregorian calendar is based mainly on Earth's orbit around the Sun.",
+      "answer": true,
+      "explain": "It is a solar calendar, not a lunar calendar."
+    },
+    {
+      "type": "choice",
+      "question": "What is one major cause of Earth's ocean tides?",
+      "options": [
+        "The Moon’s gravitational pull",
+        "The Moon’s light",
+        "Earth’s clouds",
+        "The stars’ brightness"
+      ],
+      "answer": 0,
+      "explain": "The Moon’s gravity helps create ocean tides, along with the Sun’s gravity."
+    },
+    {
+      "type": "truefalse",
+      "question": "The Moon’s orbit around Earth has no effect on ocean tides.",
+      "answer": false,
+      "explain": "The Moon’s changing position affects the pattern of tides."
+    },
+    {
+      "type": "choice",
+      "question": "Who was the first person to walk on the Moon?",
+      "options": [
+        "Yuri Gagarin",
+        "Buzz Aldrin",
+        "Neil Armstrong",
+        "Michael Collins"
+      ],
+      "answer": 2,
+      "explain": "Neil Armstrong stepped onto the lunar surface during Apollo 11 in 1969."
+    },
+    {
+      "type": "type",
+      "question": "In what year did humans first walk on the Moon?",
+      "answers": [
+        "1969"
+      ],
+      "explain": "The Apollo 11 Moon landing took place in July 1969."
+    },
+    {
+      "type": "choice",
+      "question": "Which mission first landed humans on the Moon?",
+      "options": [
+        "Apollo 8",
+        "Apollo 11",
+        "Apollo 13",
+        "Apollo 17"
+      ],
+      "answer": 1,
+      "explain": "Apollo 11 carried the first astronauts to walk on the Moon."
+    },
+    {
+      "type": "truefalse",
+      "question": "Yuri Gagarin was the first human to travel into space.",
+      "answer": true,
+      "explain": "Gagarin became the first human in space in 1961."
+    },
+    {
+      "type": "choice",
+      "question": "What was the Space Race?",
+      "options": [
+        "A competition to build faster cars",
+        "A competition between the United States and the Soviet Union in space exploration",
+        "A race around the Moon by robots",
+        "A contest to discover new oceans"
+      ],
+      "answer": 1,
+      "explain": "The United States and the Soviet Union competed in space exploration during the Cold War."
+    },
+    {
+      "type": "truefalse",
+      "question": "Apollo 8 was the first crewed mission to orbit the Moon.",
+      "answer": true,
+      "explain": "Apollo 8 astronauts orbited the Moon in December 1968."
+    },
+    {
+      "type": "choice",
+      "question": "What is a lunar rover designed to do?",
+      "options": [
+        "Fly through the Moon’s atmosphere",
+        "Travel across the lunar surface",
+        "Create oxygen from sunlight",
+        "Change the Moon’s orbit"
+      ],
+      "answer": 1,
+      "explain": "A lunar rover helps astronauts or robotic missions travel over the Moon’s surface."
+    },
+    {
+      "type": "truefalse",
+      "question": "Robotic spacecraft have helped scientists explore the Moon.",
+      "answer": true,
+      "explain": "Orbiters, landers, and rovers have collected valuable lunar data."
+    },
+    {
+      "type": "choice",
+      "question": "Why is water ice on the Moon important for future exploration?",
+      "options": [
+        "It makes the Moon warmer",
+        "It may provide water and useful resources",
+        "It creates an atmosphere",
+        "It stops meteor impacts"
+      ],
+      "answer": 1,
+      "explain": "Water ice could potentially support astronauts and be processed into useful materials."
+    },
+    {
+      "type": "truefalse",
+      "question": "The Moon has an atmosphere as dense as Earth's.",
+      "answer": false,
+      "explain": "The Moon has an extremely thin exosphere, not a dense atmosphere like Earth’s."
+    },
+    {
+      "type": "choice",
+      "question": "What is one challenge of building a settlement on the Moon?",
+      "options": [
+        "Too much rain",
+        "Extreme temperatures and radiation",
+        "Too many forests",
+        "Strong ocean currents"
+      ],
+      "answer": 1,
+      "explain": "The Moon has extreme temperature changes and little natural protection from radiation."
+    },
+    {
+      "type": "type",
+      "question": "What is the name of the first human-made object to reach the Moon?",
+      "answers": [
+        "Luna 2",
+        "Luna-2",
+        "Luna II"
+      ],
+      "explain": "The Soviet spacecraft Luna 2 reached the Moon in 1959."
+    }
+  ]
+}
