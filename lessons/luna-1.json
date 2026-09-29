@@ -1,0 +1,23 @@
+{"id":"luna-1","title":"Luna-1: The Moon Landing","description":"Apollo 11 and the race to the Moon.","icon":"🚀",
+"questions":[
+{"type":"choice","question":"Which Apollo mission first landed humans on the Moon?","options":["Apollo 8","Apollo 10","Apollo 11","Apollo 13"],"answer":2,"explain":"Apollo 11 landed on July 20, 1969."},
+{"type":"type","question":"Who was the first person to walk on the Moon?","answers":["Neil Armstrong"],"explain":"Armstrong stepped onto the surface first, followed by Buzz Aldrin."},
+{"type":"choice","question":"Who was the second person to walk on the Moon?","options":["Michael Collins","Buzz Aldrin","John Glenn","Jim Lovell"],"answer":1,"explain":"Aldrin followed Armstrong out about 20 minutes later."},
+{"type":"choice","question":"Who piloted the command module and stayed in lunar orbit during Apollo 11?","options":["Michael Collins","Buzz Aldrin","Neil Armstrong","Gus Grissom"],"answer":0,"explain":"Collins orbited the Moon alone while the other two landed."},
+{"type":"truefalse","question":"The Apollo 11 lunar module was named Eagle.","answer":true,"explain":"The command module was named Columbia."},
+{"type":"type","question":"What year did Apollo 11 land on the Moon?","answers":["1969"],"explain":"July 20, 1969."},
+{"type":"choice","question":"Which country's space program did the US race against during the Space Race?","options":["China","Soviet Union","Japan","United Kingdom"],"answer":1,"explain":"The Cold War rivalry drove the US and USSR's space programs."},
+{"type":"type","question":"What was Neil Armstrong's famous quote when stepping onto the Moon? Type the first word.","answers":["that's","thats"],"explain":"\"That's one small step for man, one giant leap for mankind.\""},
+{"type":"choice","question":"Which Moon region did Apollo 11 land in?","options":["Sea of Tranquility","Ocean of Storms","Sea of Serenity","Copernicus Crater"],"answer":0,"explain":"Mare Tranquillitatis, a flat volcanic plain."},
+{"type":"truefalse","question":"Apollo 11 was the first crewed mission to orbit the Moon.","answer":false,"explain":"Apollo 8 was first to orbit the Moon, in December 1968."},
+{"type":"choice","question":"What rocket launched the Apollo 11 mission?","options":["Saturn V","Falcon 9","Titan II","Atlas V"],"answer":0,"explain":"The Saturn V remains the most powerful rocket ever flown successfully."},
+{"type":"choice","question":"How long did Armstrong and Aldrin stay on the lunar surface?","options":["About 2 hours","About 21 hours","About 3 days","About 1 week"],"answer":1,"explain":"They spent roughly 21.5 hours on the surface, including about 2.5 hours outside the lander."},
+{"type":"truefalse","question":"The astronauts left an American flag on the Moon.","answer":true,"explain":"They also left a plaque reading \"We came in peace for all mankind.\""},
+{"type":"choice","question":"Which US president challenged the nation to reach the Moon by the end of the decade?","options":["Dwight Eisenhower","John F. Kennedy","Lyndon Johnson","Richard Nixon"],"answer":1,"explain":"Kennedy's 1961 speech set the goal for the 1960s."},
+{"type":"type","question":"What was the name of the Apollo 11 command module?","answers":["Columbia"],"explain":"Collins remained aboard Columbia in lunar orbit."},
+{"type":"choice","question":"Which Apollo mission suffered an oxygen tank explosion and had to abort its Moon landing?","options":["Apollo 11","Apollo 12","Apollo 13","Apollo 14"],"answer":2,"explain":"The crew of Apollo 13 returned safely despite the failure."},
+{"type":"truefalse","question":"A total of twelve people have walked on the Moon.","answer":true,"explain":"All twelve were part of the US Apollo program, between 1969 and 1972."},
+{"type":"choice","question":"Which Apollo mission was the last to land humans on the Moon?","options":["Apollo 15","Apollo 16","Apollo 17","Apollo 18"],"answer":2,"explain":"Apollo 17 landed in December 1972; Apollo 18 was cancelled."},
+{"type":"choice","question":"What agency ran the Apollo program?","options":["ESA","NASA","Roscosmos","JAXA"],"answer":1,"explain":"NASA, the US space agency, founded in 1958."},
+{"type":"truefalse","question":"There is no wind on the Moon, so footprints left by astronauts can last millions of years.","answer":true,"explain":"With no atmosphere or weather, undisturbed footprints erode extremely slowly."}
+]}
