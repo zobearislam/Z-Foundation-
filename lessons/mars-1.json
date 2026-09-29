@@ -1,0 +1,208 @@
+{
+  "id": "mars-1",
+  "title": "Mars-1: Exploring the Red Planet",
+  "description": "Discover Mars, its landscape, missions, and the search for past life.",
+  "icon": "🔴",
+  "questions": [
+    {
+      "type": "choice",
+      "question": "What is Mars commonly called?",
+      "options": [
+        "The Blue Planet",
+        "The Red Planet",
+        "The Ringed Planet",
+        "The Evening Star"
+      ],
+      "answer": 1,
+      "explain": "Iron-rich dust gives Mars its reddish appearance."
+    },
+    {
+      "type": "choice",
+      "question": "Which planet is Mars from the Sun?",
+      "options": [
+        "Second",
+        "Third",
+        "Fourth",
+        "Fifth"
+      ],
+      "answer": 2,
+      "explain": "Mars is the fourth planet from the Sun."
+    },
+    {
+      "type": "type",
+      "question": "What is the name of Mars's largest volcano?",
+      "answers": [
+        "Olympus Mons",
+        "olympus mons"
+      ],
+      "explain": "Olympus Mons is a huge shield volcano."
+    },
+    {
+      "type": "truefalse",
+      "question": "Mars has two small natural moons.",
+      "answer": true,
+      "explain": "Its moons are Phobos and Deimos."
+    },
+    {
+      "type": "choice",
+      "question": "What are the names of Mars's two moons?",
+      "options": [
+        "Europa and Io",
+        "Phobos and Deimos",
+        "Titan and Rhea",
+        "Ganymede and Callisto"
+      ],
+      "answer": 1,
+      "explain": "Phobos and Deimos are named after figures associated with fear and terror in Greek mythology."
+    },
+    {
+      "type": "choice",
+      "question": "Which gas makes up most of Mars's atmosphere?",
+      "options": [
+        "Oxygen",
+        "Nitrogen",
+        "Carbon dioxide",
+        "Hydrogen"
+      ],
+      "answer": 2,
+      "explain": "Mars's thin atmosphere is mostly carbon dioxide."
+    },
+    {
+      "type": "truefalse",
+      "question": "Mars is warmer than Earth on average.",
+      "answer": false,
+      "explain": "Mars is much colder than Earth on average."
+    },
+    {
+      "type": "choice",
+      "question": "What is the name of the large canyon system on Mars?",
+      "options": [
+        "Grand Canyon",
+        "Valles Marineris",
+        "Rift Valley",
+        "Mariana Trench"
+      ],
+      "answer": 1,
+      "explain": "Valles Marineris stretches thousands of kilometers across Mars."
+    },
+    {
+      "type": "type",
+      "question": "What is the name of NASA's rover that landed on Mars in 2021?",
+      "answers": [
+        "Perseverance"
+      ],
+      "explain": "Perseverance landed in Jezero Crater in February 2021."
+    },
+    {
+      "type": "choice",
+      "question": "Which NASA rover landed on Mars in 2012?",
+      "options": [
+        "Spirit",
+        "Opportunity",
+        "Curiosity",
+        "Sojourner"
+      ],
+      "answer": 2,
+      "explain": "Curiosity landed in Gale Crater in August 2012."
+    },
+    {
+      "type": "truefalse",
+      "question": "Liquid water currently flows widely across the surface of Mars.",
+      "answer": false,
+      "explain": "Stable liquid water is not known to flow widely on the present-day surface."
+    },
+    {
+      "type": "choice",
+      "question": "Why do scientists study ancient river channels and lakebeds on Mars?",
+      "options": [
+        "To find dinosaur bones",
+        "To learn whether Mars once had conditions suitable for life",
+        "To locate Earth's continents",
+        "To measure Saturn's rings"
+      ],
+      "answer": 1,
+      "explain": "Past water environments help scientists investigate whether Mars could once have supported microbial life."
+    },
+    {
+      "type": "choice",
+      "question": "What is the name of the first artificial object to reach Mars successfully?",
+      "options": [
+        "Mariner 4",
+        "Mars 3",
+        "Mars 1",
+        "Viking 1"
+      ],
+      "answer": 0,
+      "explain": "NASA's Mariner 4 flew past Mars in 1965 and returned the first close-up images."
+    },
+    {
+      "type": "truefalse",
+      "question": "Humans have already walked on Mars.",
+      "answer": false,
+      "explain": "No human has visited Mars yet; robotic spacecraft have explored it."
+    },
+    {
+      "type": "choice",
+      "question": "What is a Martian day called?",
+      "options": [
+        "A lunar day",
+        "A sol",
+        "A sidereal month",
+        "A yearling"
+      ],
+      "answer": 1,
+      "explain": "A sol is one rotation of Mars, about 24 hours and 39 minutes."
+    },
+    {
+      "type": "type",
+      "question": "What is the name of the enormous impact basin where Perseverance landed?",
+      "answers": [
+        "Jezero Crater",
+        "jezero"
+      ],
+      "explain": "Jezero Crater once contained a lake and river delta."
+    },
+    {
+      "type": "choice",
+      "question": "Which color best describes the sky near the Martian surface during daytime?",
+      "options": [
+        "Often butterscotch or reddish",
+        "Always deep blue",
+        "Always green",
+        "Bright purple"
+      ],
+      "answer": 0,
+      "explain": "Fine dust often makes the daytime sky look butterscotch-colored; sunsets can appear bluish near the Sun."
+    },
+    {
+      "type": "truefalse",
+      "question": "Mars has seasons because its axis is tilted.",
+      "answer": true,
+      "explain": "Mars's axial tilt causes seasonal changes, much like Earth's."
+    },
+    {
+      "type": "choice",
+      "question": "What is the main goal of searching for signs of ancient life on Mars?",
+      "options": [
+        "To prove aliens live there today",
+        "To learn whether life ever existed beyond Earth",
+        "To find a new star",
+        "To change Mars's orbit"
+      ],
+      "answer": 1,
+      "explain": "Scientists look for evidence that microbial life may have existed in Mars's ancient environments."
+    },
+    {
+      "type": "choice",
+      "question": "Which planet is often described as Earth's neighboring planet beyond Earth's orbit?",
+      "options": [
+        "Venus",
+        "Mars",
+        "Jupiter",
+        "Mercury"
+      ],
+      "answer": 1,
+      "explain": "Mars is the next planet outward from Earth in the Solar System."
+    }
+  ]
+}
