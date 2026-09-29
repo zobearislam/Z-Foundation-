@@ -1,0 +1,9 @@
+{"id":"moons","title":"Moons Worth Visiting","description":"Io, Europa, Titan and other strange worlds.","icon":"🌙",
+"questions":[
+{"type":"choice","question":"Which moon has a thick atmosphere and lakes of liquid methane?","options":["Titan","Io","Europa","Triton"],"answer":0,"explain":"Titan orbits Saturn."},
+{"type":"choice","question":"Which is the largest moon in the solar system?","options":["Titan","The Moon","Ganymede","Callisto"],"answer":2,"explain":"Ganymede orbits Jupiter and is bigger than Mercury."},
+{"type":"truefalse","question":"Io is the most volcanically active world in the solar system.","answer":true,"explain":"Jupiter's gravity squeezes Io and powers hundreds of volcanoes."},
+{"type":"type","question":"Which Jupiter moon hides a global ocean under its ice? (one word)","answers":["Europa"],"explain":"Europa is a top target in the search for life."},
+{"type":"truefalse","question":"Triton orbits Neptune in the same direction the planet spins.","answer":false,"explain":"Triton orbits backwards, which suggests it was captured."},
+{"type":"choice","question":"How many moons does Earth have?","options":["0","1","2","4"],"answer":1,"explain":"Just the Moon."}
+]}

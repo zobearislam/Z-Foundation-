@@ -1,0 +1,11 @@
+{"id":"solar-system-basics","title":"Solar System Basics","description":"Planets, the Sun and our place in the galaxy.","icon":"🪐",
+"questions":[
+{"type":"choice","question":"Which planet is closest to the Sun?","options":["Mercury","Venus","Earth","Mars"],"answer":0,"explain":"Mercury orbits the Sun at about 58 million km."},
+{"type":"truefalse","question":"The Sun is a planet.","answer":false,"explain":"The Sun is a star. It holds almost all the mass of the solar system."},
+{"type":"choice","question":"Which is the largest planet?","options":["Saturn","Jupiter","Neptune","Earth"],"answer":1,"explain":"Jupiter is more than 300 times the mass of Earth."},
+{"type":"type","question":"Which planet is famous for its rings?","answers":["Saturn"],"explain":"Saturn's rings are made of ice and rock."},
+{"type":"choice","question":"How many planets are in the solar system?","options":["7","8","9","10"],"answer":1,"explain":"Eight. Pluto is now classed as a dwarf planet."},
+{"type":"truefalse","question":"Venus is the hottest planet.","answer":true,"explain":"Venus averages about 465 °C, hotter than Mercury, because of its thick carbon dioxide atmosphere."},
+{"type":"choice","question":"Which planet is called the Red Planet?","options":["Mars","Jupiter","Mercury","Uranus"],"answer":0,"explain":"Iron-rich dust gives Mars its rusty color."},
+{"type":"type","question":"What is the name of our galaxy?","answers":["Milky Way","The Milky Way"],"explain":"The solar system sits in one arm of the Milky Way."}
+]}

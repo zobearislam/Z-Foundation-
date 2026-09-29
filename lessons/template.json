@@ -1,0 +1,6 @@
+{"id":"my-lesson-id","title":"Lesson title","description":"One short sentence about the lesson.","icon":"🚀",
+"questions":[
+{"type":"choice","question":"Multiple choice question?","options":["Wrong","Right","Wrong","Wrong"],"answer":1,"explain":"Shown after answering (optional)."},
+{"type":"truefalse","question":"A true or false statement.","answer":true,"explain":"Optional."},
+{"type":"type","question":"A question with a typed answer?","answers":["main answer","other accepted answer"],"explain":"Optional."}
+]}
