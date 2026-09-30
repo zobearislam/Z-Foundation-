@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>REPLACE WITH TITLE</title>
+<!--
+DOCUMENTARY TEMPLATE
+=====================
+How to make a new documentary from this file:
+
+1. Save a COPY of this file with a new name, e.g. "titan-documentary.html"
+   (lowercase, no spaces, ends in .html)
+
+2. Replace the <title> above with your real title.
+
+3. Fill in the <header> section below: a big title, a one or two
+   sentence intro, and leave the "Open every chapter" button as is.
+
+4. Copy one <section> block for each chapter of your documentary.
+   Each section needs:
+     - data-y="YEAR"  -> a year number, used for the top progress counter
+     - the chapter heading text (inside the .hl button)
+     - .when -> a short date/era label
+     - one or two short paragraphs of the main story
+     - .frame -> an optional italic "visual" note (what an editor
+       would show on screen -- purely descriptive, delete if unused)
+     - .extra -> the hidden "read more" content, using <h3> for
+       sub-headings and <p> or <ul><li> for the details. This is
+       what appears when the reader taps "+".
+
+5. Delete this whole comment block before publishing.
+
+6. Add a link to your new file inside topics.html's Telescopes box
+   (or wherever it belongs), the same way "The Voyagers" and
+   "Hubble" are linked, e.g.:
+   <a class="tel-link" href="titan-documentary.html"><b>Titan</b></a>
+
+Nothing else in this file needs to change -- the script at the
+bottom handles the year counter and the expand/collapse behavior
+automatically for however many sections you add.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,500;1,300&family=Archivo:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}}
+:root[data-theme="light"]{--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}
+:root[data-theme="dark"]{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 1.2rem/1.65 Newsreader,Georgia,serif}
+.gauge{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);
+padding:.6rem 1.2rem;display:flex;justify-content:space-between;align-items:baseline;font:500 .8rem Archivo,system-ui,sans-serif;color:var(--dim)}
+.gauge b{font:800 1.5rem Archivo,system-ui,sans-serif;color:var(--acc);font-variant-numeric:tabular-nums}
+header{padding:22vh 1.4rem 16vh;max-width:40rem;margin:auto}
+h1{font:800 clamp(2.6rem,11vw,5rem)/.98 Archivo,system-ui,sans-serif;margin:0 0 1.5rem;letter-spacing:-.03em}
+header p{color:var(--dim);font-style:italic;margin:0}
+section{max-width:40rem;margin:auto;padding:14vh 1.4rem;border-top:1px solid var(--rule)}
+h2{margin:0 0 .3rem}
+.hl{all:unset;cursor:pointer;display:inline-block;background:var(--acc);color:var(--bg);padding:.1em .45em;font:800 1.9rem/1.15 Archivo,system-ui,sans-serif;letter-spacing:-.02em}
+.hl:focus-visible,.all:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hl::after{content:" +";font-weight:500}.hl[aria-expanded=true]::after{content:" \2212"}
+.when{font:500 .9rem Archivo,system-ui,sans-serif;color:var(--acc);margin:0 0 1.6rem}
+p{margin:0 0 1.2rem}
+.frame{border-left:2px solid var(--acc);padding-left:1rem;color:var(--dim);font-style:italic;font-size:1rem;margin-top:1.8rem}
+.big{font-size:1.55rem;line-height:1.35;font-weight:500}
+.extra{display:none;margin-top:2rem;padding-top:1.4rem;border-top:1px dashed var(--acc)}.extra.open{display:block}
+.extra h3{font:800 1.15rem Archivo,system-ui,sans-serif;color:var(--acc);margin:1.8rem 0 .4rem}
+.extra p,.extra li{font-size:1.08rem}.extra ul{padding-left:1.2rem;margin:0 0 1.2rem}
+.all{all:unset;cursor:pointer;margin-top:1.6rem;display:inline-block;border:1px solid var(--acc);color:var(--acc);padding:.4rem .9rem;font:500 .9rem Archivo,system-ui,sans-serif}
+footer{max-width:40rem;margin:auto;padding:12vh 1.4rem 18vh;border-top:1px solid var(--rule);color:var(--dim);font-size:1rem}
+</style>
+</head>
+<body>
+<div class="gauge"><span>Year</span><b id="yr">0000</b></div>
+
+<header>
+<h1>REPLACE WITH TITLE</h1>
+<p>REPLACE WITH A ONE OR TWO SENTENCE INTRO. Set the scene for the whole documentary.</p>
+<button class="all" id="all">Open every chapter</button>
+</header>
+
+<section data-y="0000">
+<h2><button class="hl" aria-expanded="false">Chapter title</button></h2>
+<p class="when">Date or era label</p>
+<p>Main story text for this chapter. Keep it to one or two short paragraphs -- this is what every reader sees without tapping anything.</p>
+<div class="frame">Visual: an optional italic note describing what would be shown on screen here. Delete this div if you don't want one.</div>
+<div class="extra">
+<h3>A sub-heading</h3><p>Extra detail that appears when the reader taps the "+" on the chapter title.</p>
+<h3>Another sub-heading</h3><ul><li>You can use bullet lists too</li><li>Like this</li></ul>
+</div>
+</section>
+
+<section data-y="0000">
+<h2><button class="hl" aria-expanded="false">Second chapter title</button></h2>
+<p class="when">Date or era label</p>
+<p>Copy the whole &lt;section&gt; block above for as many chapters as you need. Each one needs a unique data-y year so the top counter animates correctly as the reader scrolls.</p>
+<div class="extra">
+<h3>Sub-heading</h3><p>More detail here.</p>
+</div>
+</section>
+
+<footer>
+Sources: list where the facts came from here.
+</footer>
+
+<script>
+(function(){
+var el=document.getElementById('yr'),cur=0,target=0,raf;
+var first=document.querySelector('section[data-y]');if(first)cur=target=parseFloat(first.dataset.y);
+el.textContent=Math.round(cur);
+function tick(){cur+=(target-cur)*.1;if(Math.abs(target-cur)<.5)cur=target;el.textContent=Math.round(cur);if(cur!==target)raf=requestAnimationFrame(tick)}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){target=parseFloat(e.target.dataset.y);cancelAnimationFrame(raf);
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){cur=target;el.textContent=target}else{tick()}}})},{rootMargin:'-45% 0px -45% 0px'});
+document.querySelectorAll('section[data-y]').forEach(function(s){io.observe(s)});
+document.querySelectorAll('.hl').forEach(function(b){b.addEventListener('click',function(){var x=b.closest('section').querySelector('.extra');var o=x.classList.toggle('open');b.setAttribute('aria-expanded',o)})});
+var all=document.getElementById('all'),open=false;
+all.addEventListener('click',function(){open=!open;document.querySelectorAll('.extra').forEach(function(x){x.classList.toggle('open',open)});document.querySelectorAll('.hl').forEach(function(b){b.setAttribute('aria-expanded',open)});all.textContent=open?'Close every chapter':'Open every chapter'});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Documentary | Z-Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,500;1,300&family=Archivo:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}}
+:root[data-theme="light"]{--bg:#f2f0ea;--ink:#141830;--dim:#5a6079;--acc:#0d6b65;--rule:#cdc9bb}
+:root[data-theme="dark"]{--bg:#0b0c1e;--ink:#e8e4da;--dim:#9096b0;--acc:#6fd0c8;--rule:#252947}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 1.2rem/1.65 Newsreader,Georgia,serif}
+.gauge{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);
+padding:.6rem 1.2rem;display:flex;justify-content:space-between;align-items:baseline;font:500 .8rem Archivo,system-ui,sans-serif;color:var(--dim);gap:12px}
+.gauge span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gauge b{font:800 1.5rem Archivo,system-ui,sans-serif;color:var(--acc);font-variant-numeric:tabular-nums;white-space:nowrap}
+.back{position:fixed;left:12px;top:calc(48px + env(safe-area-inset-top,0px));z-index:6;background:var(--bg);border:1px solid var(--rule);color:var(--ink);text-decoration:none;font:500 .8rem Archivo,system-ui,sans-serif;padding:6px 12px;border-radius:999px}
+header{padding:22vh 1.4rem 16vh;max-width:40rem;margin:auto}
+h1{font:800 clamp(2.6rem,11vw,5rem)/.98 Archivo,system-ui,sans-serif;margin:0 0 1.5rem;letter-spacing:-.03em}
+header p{color:var(--dim);font-style:italic;margin:0}
+section{max-width:40rem;margin:auto;padding:14vh 1.4rem;border-top:1px solid var(--rule)}
+h2{margin:0 0 .3rem}
+.hl{all:unset;cursor:pointer;display:inline-block;background:var(--acc);color:var(--bg);padding:.1em .45em;font:800 1.9rem/1.15 Archivo,system-ui,sans-serif;letter-spacing:-.02em}
+.hl:focus-visible,.all:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hl::after{content:" +";font-weight:500}.hl[aria-expanded=true]::after{content:" \2212"}
+.when{font:500 .9rem Archivo,system-ui,sans-serif;color:var(--acc);margin:0 0 1.6rem}
+p{margin:0 0 1.2rem}
+.frame{border-left:2px solid var(--acc);padding-left:1rem;color:var(--dim);font-style:italic;font-size:1rem;margin-top:1.8rem}
+.extra{display:none;margin-top:2rem;padding-top:1.4rem;border-top:1px dashed var(--acc)}.extra.open{display:block}
+.extra h3{font:800 1.15rem Archivo,system-ui,sans-serif;color:var(--acc);margin:1.8rem 0 .4rem}
+.extra p,.extra li{font-size:1.08rem}.extra ul{padding-left:1.2rem;margin:0 0 1.2rem}
+.all{all:unset;cursor:pointer;margin-top:1.6rem;display:inline-block;border:1px solid var(--acc);color:var(--acc);padding:.4rem .9rem;font:500 .9rem Archivo,system-ui,sans-serif}
+footer{max-width:40rem;margin:auto;padding:12vh 1.4rem 18vh;border-top:1px solid var(--rule);color:var(--dim);font-size:1rem}
+.load,.err{max-width:40rem;margin:22vh auto;padding:0 1.4rem;font:1.1rem Newsreader,Georgia,serif;color:var(--dim)}
+.err a{color:var(--acc)}
+</style>
+</head>
+<body>
+<a class="back" href="topics.html">← Topics</a>
+<div class="gauge"><span id="glabel">Loading</span><b id="yr"></b></div>
+<div id="root"><p class="load">Loading documentary…</p></div>
+<script>
+(function(){
+var id=(new URLSearchParams(location.search).get("id")||"").replace(/[^a-z0-9_-]/gi,"");
+var root=document.getElementById("root"),glabel=document.getElementById("glabel"),yrEl=document.getElementById("yr");
+fetch("documentaries/"+id+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(build).catch(function(){
+  root.innerHTML='<div class="err"><h1 style="font:800 2rem Archivo,system-ui,sans-serif">Documentary not found</h1><p><a href="topics.html">Back to Topics</a></p></div>';
+  glabel.textContent="";
+});
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function build(d){
+  document.title=d.title+" | Z-Foundation";
+  glabel.textContent=d.gauge_label||"";
+  var suf=d.gauge_suffix||"";
+  var html='<header><h1>'+esc(d.title)+'</h1><p>'+(d.intro||"")+'</p>'+(d.chapters&&d.chapters.length>1?'<button class="all" id="all">Open every chapter</button>':'')+'</header>';
+  (d.chapters||[]).forEach(function(c,i){
+    html+='<section data-v="'+esc(String(c.value))+'"><h2><button class="hl" aria-expanded="false">'+esc(c.heading)+'</button></h2>';
+    if(c.when)html+='<p class="when">'+esc(c.when)+'</p>';
+    (c.main||[]).forEach(function(p){html+='<p>'+p+'</p>'});
+    if(c.frame)html+='<div class="frame">'+c.frame+'</div>';
+    if(c.extra)html+='<div class="extra">'+c.extra+'</div>';
+    html+='</section>';
+  });
+  if(d.footer)html+='<footer>'+d.footer+'</footer>';
+  root.innerHTML=html;
+  var first=document.querySelector('section[data-v]');
+  var cur=0,target=0,raf;
+  if(first){cur=target=parseFloat(first.dataset.v)||0}
+  yrEl.textContent=(Math.round(cur))+suf;
+  function tick(){cur+=(target-cur)*.1;if(Math.abs(target-cur)<.5)cur=target;yrEl.textContent=Math.round(cur)+suf;if(cur!==target)raf=requestAnimationFrame(tick)}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){target=parseFloat(e.target.dataset.v)||0;cancelAnimationFrame(raf);
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){cur=target;yrEl.textContent=Math.round(target)+suf}else{tick()}}})},{rootMargin:'-45% 0px -45% 0px'});
+  document.querySelectorAll('section[data-v]').forEach(function(s){io.observe(s)});
+  document.querySelectorAll('.hl').forEach(function(b){b.addEventListener('click',function(){var x=b.closest('section').querySelector('.extra');if(!x)return;var o=x.classList.toggle('open');b.setAttribute('aria-expanded',o)})});
+  var all=document.getElementById('all'),open=false;
+  if(all)all.addEventListener('click',function(){open=!open;document.querySelectorAll('.extra').forEach(function(x){x.classList.toggle('open',open)});document.querySelectorAll('.hl').forEach(function(b){b.setAttribute('aria-expanded',open)});all.textContent=open?'Close every chapter':'Open every chapter'});
+}
+})();
+</script>
+</body>
+</html>

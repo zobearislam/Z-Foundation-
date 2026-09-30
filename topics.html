@@ -16,13 +16,30 @@
 <div class="card"><span class="tag live">Live</span><h3>The Solar System</h3><p>Every planet, its moons and the worlds beyond Neptune.</p><a href="solar-system.html">Open the map</a></div>
 <div class="card"><span class="tag">Coming soon</span><h3>Moons worth visiting</h3><p>Io, Europa, Titan, Triton and more.</p></div>
 <div class="card tel"><span class="tag live">Interactive</span><h3>Telescopes</h3><p>Reveals more as we add it. Tap to open.</p>
-  <div class="tel-list"><a class="tel-link" href="voyager-documentary.html"><b>The Voyagers</b></a><a class="tel-link" href="hubble-documentary.html"><b>Hubble</b></a></div>
+  <div class="tel-list" id="tel-list"><span style="color:var(--dim);font-size:14px">Loading…</span></div>
 </div>
 <div class="card"><span class="tag">Coming soon</span><h3>Dwarf planets</h3><p>Pluto, Eris and the Kuiper belt.</p></div>
 </div>
 <script>
 document.querySelectorAll(".tel").forEach(function(c){
   c.addEventListener("click",function(e){if(e.target.closest(".tel-link"))return;c.classList.toggle("open")});
+});
+</script>
+<script>
+fetch("documentaries/index.json").then(function(r){return r.json()}).then(function(ix){
+  return Promise.all((ix.documentaries||[]).map(function(id){
+    return fetch("documentaries/"+id+".json").then(function(r){return r.ok?r.json():null}).then(function(d){return d&&{id:id,d:d}}).catch(function(){return null})
+  }))
+}).then(function(rs){
+  var list=document.getElementById("tel-list");if(!list)return;
+  list.innerHTML="";
+  rs.filter(Boolean).forEach(function(o){
+    var a=document.createElement("a");a.className="tel-link";a.href="documentary.html?id="+encodeURIComponent(o.id);
+    var b=document.createElement("b");b.textContent=o.d.title;a.appendChild(b);list.appendChild(a);
+  });
+  if(!list.children.length)list.innerHTML='<span style="color:var(--dim);font-size:14px">Coming soon.</span>';
+}).catch(function(){
+  var list=document.getElementById("tel-list");if(list)list.innerHTML='<span style="color:var(--dim);font-size:14px">Couldn\'t load.</span>';
 });
 </script>
 </main>

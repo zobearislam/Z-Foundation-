@@ -1,0 +1,29 @@
+{
+  "id": "my-documentary-id",
+  "title": "Documentary Title",
+  "intro": "One or two sentence intro shown under the title. Basic <i>italic</i> or <b>bold</b> HTML is fine here.",
+  "gauge_label": "Year",
+  "gauge_suffix": "",
+  "chapters": [
+    {
+      "value": "1969",
+      "heading": "Chapter title",
+      "when": "Date or era label",
+      "main": [
+        "First paragraph of the main story, shown to every reader.",
+        "Optional second paragraph."
+      ],
+      "frame": "Optional italic visual note, e.g. what an editor would show on screen. Leave as an empty string to skip it.",
+      "extra": "<h3>A sub-heading</h3><p>Extra detail shown when the reader taps the chapter's + button.</p><h3>Another sub-heading</h3><ul><li>Bullet point</li><li>Another bullet point</li></ul>"
+    },
+    {
+      "value": "1972",
+      "heading": "Second chapter",
+      "when": "Date or era label",
+      "main": ["Copy this whole block for each chapter. 'value' should generally increase chapter to chapter so the gauge counts up as the reader scrolls, but it can be a year, a distance, or any other number that fits your gauge_label."],
+      "frame": "",
+      "extra": "<h3>Detail</h3><p>More text.</p>"
+    }
+  ],
+  "footer": "Sources: list where the facts came from here."
+}
