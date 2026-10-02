@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Games | Z-Foundation</title><meta name="description" content="Play and explore. Space and science games.">
+<link rel="stylesheet" href="style.css">
+<style>.glink{display:flex;gap:16px;align-items:center;text-decoration:none;color:var(--ink)}.glink:hover{border-color:var(--acc)}.gic{font-size:36px}.glink h3{margin:0}.glink p{margin:2px 0 0}.glink.off{opacity:.6;pointer-events:none}</style>
+</head><body>
+<header><nav><a class="brand" href="index.html">Z-Foundation</a><a href="index.html">Home</a><a href="topics.html">Topics</a><a href="lessons.html">Lessons</a><a href="games.html" aria-current="page">Games</a><a href="solar-system.html">Solar System Map</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header>
+<main>
+<h1>Games</h1><p class="lead">Play and explore. Each game opens on its own page.</p>
+<div class="grid" id="list" style="grid-template-columns:1fr"><p>Loading games…</p></div>
+</main>
+<footer>© <span id="y">2026</span> Z-Foundation. Made for curious people.</footer>
+<script>
+document.getElementById("y").textContent=new Date().getFullYear();
+var list=document.getElementById("list");
+fetch("games/index.json").then(function(r){return r.json()}).then(function(ix){
+  return Promise.all((ix.games||[]).map(function(id){
+    return fetch("games/"+id+".json").then(function(r){return r.ok?r.json():null}).then(function(g){return g&&{id:id,g:g}}).catch(function(){return null})
+  }))
+}).then(function(rs){
+  list.innerHTML="";
+  rs.filter(Boolean).forEach(function(o){
+    var g=o.g,has=g.url&&g.url.trim().length>0;
+    var a=document.createElement(has?"a":"div");
+    a.className="card glink"+(has?"":" off");
+    if(has)a.href=g.url;
+    a.innerHTML='<div class="gic"></div><div><h3></h3><p></p></div>';
+    a.querySelector(".gic").textContent=g.icon||"🎮";
+    a.querySelector("h3").textContent=g.title;
+    a.querySelector("p").textContent=(g.description||"")+(g.tag?" · "+g.tag:(has?"":" · Coming soon"));
+    list.appendChild(a);
+  });
+  if(!list.children.length)list.innerHTML="<p>No games yet.</p>";
+}).catch(function(){
+  list.innerHTML="<p>Couldn't load games. They only load from the live website, not from a file opened directly on your phone.</p>";
+});
+</script>
+</body></html>
