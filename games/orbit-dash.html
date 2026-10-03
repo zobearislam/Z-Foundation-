@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Orbit Dash | Z-Foundation</title>
+<style>
+:root{--bg:#070b16;--card:#101628;--line:#26314f;--ink:#e8ecf5;--dim:#9aa6c0;--acc:#7fd4c8;--good:#58cc02;--bad:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#16254b 0,#070b16 48%);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;display:flex;justify-content:center}
+.app{width:min(680px,100%);padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:24px;margin:0}.sub{color:var(--dim);font-size:13px;margin-top:3px}
+button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+button:active{transform:scale(.97)}
+.stats{display:flex;gap:8px;margin-bottom:10px}.pill{flex:1;background:var(--card);border:1px solid var(--line);padding:9px;border-radius:12px;text-align:center;font-size:13px}.pill b{display:block;font-size:18px}
+#game{position:relative;width:100%;height:min(72vh,560px);min-height:440px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(#071126,#091a32 55%,#06101e)}
+canvas{display:block;width:100%;height:100%}
+.hint{color:var(--dim);font-size:13px;text-align:center;margin:10px 0}
+#question{position:absolute;inset:0;background:rgba(7,11,22,.88);display:none;align-items:center;justify-content:center;padding:20px}
+.panel{max-width:500px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center}
+.panel h2{margin-top:0}.answers{display:grid;gap:9px;margin-top:15px}.answers button{text-align:left}
+.feedback{min-height:22px;margin-top:12px;font-weight:700}
+#start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(7,11,22,.78);padding:20px}
+.startcard{max-width:430px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.startcard p{color:var(--dim);line-height:1.5}
+.controls{display:flex;justify-content:center;gap:12px;margin-top:10px}.controls button{width:110px;font-size:22px}
+.small{font-size:12px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><a href="games.html" style="color:var(--dim);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;display:inline-block;margin-bottom:8px">← Games</a><h1>🚀 Orbit Dash</h1><div class="sub">A Z-Foundation Solar System learning game</div></div><button id="restart">Restart</button></header>
+<div class="stats">
+  <div class="pill">Score<b id="score">0</b></div>
+  <div class="pill">Level<b id="level">1</b></div>
+  <div class="pill">Planets<b id="planets">0/8</b></div>
+</div>
+<div id="game">
+<canvas id="c"></canvas>
+<div id="start"><div class="startcard"><h2>Navigate the Solar System</h2><p>Move your spacecraft and collect planets in order: Mercury → Venus → Earth → Mars → Jupiter → Saturn → Uranus → Neptune.</p><button id="startBtn">Start Game</button><p class="small">Keyboard: ← → or A/D · Mobile: use the buttons below</p></div></div>
+<div id="question"><div class="panel"><h2 id="qTitle">Knowledge Check</h2><div id="qText"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback"></div></div></div>
+</div>
+<div class="controls"><button id="left">◀</button><button id="right">▶</button></div>
+<div class="hint">Collect the highlighted target planet. Correct answers unlock the next level.</div>
+</div>
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+const planets=[
+{name:'Mercury',color:'#aaa',fact:'Mercury is the closest planet to the Sun.'},
+{name:'Venus',color:'#e5b65c',fact:'Venus has a very thick carbon-dioxide atmosphere.'},
+{name:'Earth',color:'#4ca6e8',fact:'Earth is the only known planet with life.'},
+{name:'Mars',color:'#c75b45',fact:'Mars is often called the Red Planet.'},
+{name:'Jupiter',color:'#d59d70',fact:'Jupiter is the largest planet in the Solar System.'},
+{name:'Saturn',color:'#e3c47b',fact:'Saturn is famous for its bright ring system.'},
+{name:'Uranus',color:'#78d8df',fact:'Uranus rotates with a very large axial tilt.'},
+{name:'Neptune',color:'#477bd6',fact:'Neptune is the most distant of the eight planets.'}
+];
+const qs=[
+['Which planet is closest to the Sun?',['Mercury','Earth','Mars'],0],
+['Which planet is the largest?',['Jupiter','Venus','Neptune'],0],
+['Which planet is famous for its rings?',['Mars','Saturn','Mercury'],1],
+['Which planet is called the Red Planet?',['Mars','Uranus','Venus'],0],
+['Which planet is farthest from the Sun?',['Earth','Jupiter','Neptune'],2],
+['Which planet do we live on?',['Earth','Saturn','Venus'],0],
+['Which planet is known for a very thick CO₂ atmosphere?',['Venus','Uranus','Mars'],0],
+['Which planet has a strong blue appearance and is the eighth planet?',['Neptune','Mercury','Earth'],0]
+];
+let W,H,running=false,score=0,index=0,level=1,px=.5,objects=[],last=0,keys={};
+const $=id=>document.getElementById(id);
+function resize(){const d=devicePixelRatio||1;W=canvas.clientWidth;H=canvas.clientHeight;canvas.width=W*d;canvas.height=H*d;ctx.setTransform(d,0,0,d,0,0)}
+addEventListener('resize',resize); resize();
+function reset(){score=0;index=0;level=1;px=.5;objects=[];running=false;$('score').textContent=0;$('level').textContent=1;$('planets').textContent='0/8';$('start').style.display='flex';$('question').style.display='none';}
+function start(){score=0;index=0;level=1;px=.5;objects=[];running=true;$('start').style.display='none';$('score').textContent=0;spawn();requestAnimationFrame(loop)}
+function spawn(){objects=[];for(let i=0;i<8;i++)objects.push({x:35+Math.random()*(W-70),y:-80-Math.random()*H,rad:12+Math.random()*10,type:i});}
+function draw(){
+ctx.clearRect(0,0,W,H);
+for(let i=0;i<80;i++){let x=(i*97)%W,y=(i*53+performance.now()*.015*(i%3+1))%H;ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillRect(x,y,1,1)}
+objects.forEach(o=>{o.y+=1.2+level*.25;let p=planets[o.type];ctx.beginPath();ctx.arc(o.x,o.y,o.rad,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();if(o.type===index){ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.font='12px system-ui';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(p.name,o.x,o.y-o.rad-7)}});
+let sx=px*W,sy=H-55;
+ctx.save();ctx.translate(sx,sy);ctx.fillStyle='#dfefff';ctx.beginPath();ctx.moveTo(0,-22);ctx.lineTo(15,16);ctx.lineTo(0,9);ctx.lineTo(-15,16);ctx.closePath();ctx.fill();ctx.fillStyle='#7fd4c8';ctx.beginPath();ctx.arc(0,-5,6,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+function loop(t){if(!running)return;let dt=Math.min(32,t-last||16);last=t;if(keys.left)px-=.012*dt/16;if(keys.right)px+=.012*dt/16;px=Math.max(.05,Math.min(.95,px));
+objects.forEach(o=>o.y+=0.03*level*dt);let sx=px*W,sy=H-55;
+for(let i=objects.length-1;i>=0;i--){let o=objects[i];if(Math.hypot(o.x-sx,o.y-sy)<o.rad+20){if(o.type===index){objects.splice(i,1);score+=10;index++;$('score').textContent=score;$('planets').textContent=index+'/8';if(index>=8){level++;index=0;score+=100;$('level').textContent=level;$('planets').textContent='0/8';showQuestion()}else{showQuestion()}}else{o.y=H+100}}
+if(o.y>H+80)objects.splice(i,1)}
+if(objects.length<5)spawn();draw();requestAnimationFrame(loop)}
+function showQuestion(){running=false;$('question').style.display='flex';const q=qs[(level-1)%qs.length];$('qText').textContent=q[0];$('answers').innerHTML='';$('feedback').textContent='';
+q[1].forEach((a,i)=>{let b=document.createElement('button');b.textContent=a;b.onclick=()=>answer(i===q[2],b,q);$('answers').appendChild(b)})}
+function answer(ok,b,q){if(ok){score+=25;$('score').textContent=score;$('feedback').textContent='Correct! '+planets[(index+7)%8].fact;setTimeout(()=>{$('question').style.display='none';running=true;spawn();requestAnimationFrame(loop)},900)}else{$('feedback').textContent='Not quite — try another answer.';b.disabled=true}}
+function move(dir){px+=dir*.08;px=Math.max(.05,Math.min(.95,px))}
+$('startBtn').onclick=start;$('restart').onclick=reset;$('left').onpointerdown=()=>move(-1);$('right').onpointerdown=()=>move(1);
+addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a')keys.left=true;if(e.key==='ArrowRight'||e.key.toLowerCase()==='d')keys.right=true;if(e.key===' '&&$('start').style.display!=='none')start()});
+addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a')keys.left=false;if(e.key==='ArrowRight'||e.key.toLowerCase()==='d')keys.right=false});
+</script>
+</body>
+</html>
