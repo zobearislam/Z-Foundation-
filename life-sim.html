@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeSim | Z-Foundation</title>
+<style>
+:root{--bg:#070b16;--ink:#e8ecf5;--dim:#9aa6c0;--acc:#7fd4c8;--line:#26314f;--panel:#101628;--bad:#ff6b6b;--good:#58cc02;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto}
+header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);flex:none}
+header a{color:var(--dim);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+header .who{flex:1;min-width:0}
+header .name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+header .status{font-size:11px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+header .age{font-weight:800;color:var(--acc);font-size:18px;flex:none}
+#stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 14px;border-bottom:1px solid var(--line);flex:none}
+.stat{text-align:center}
+.stat b{display:block;font-size:11px;color:var(--dim);font-weight:500}
+.bar{height:6px;border-radius:99px;background:var(--line);margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.stat.money b{color:var(--dim)}
+.money-val{font-weight:800;color:#ffcf5c;margin-top:4px;font-size:13px;transition:color .3s}
+main{flex:1;overflow:auto;padding:14px}
+#log{display:flex;flex-direction:column-reverse;gap:10px}
+.ev{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.45;animation:slideIn .25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.ev .ag{color:var(--acc);font-weight:700;font-size:12px;display:block;margin-bottom:3px}
+.ev.death{border-color:var(--bad)}
+.ev.good{border-color:var(--good)}
+.ev.bad{border-color:var(--bad)}
+.choices{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.choices button{background:transparent;border:1px solid var(--acc);color:var(--ink);border-radius:10px;padding:9px 12px;font:inherit;font-size:14px;text-align:left;cursor:pointer}
+.choices button:active{background:rgba(127,212,200,.15);transform:scale(.98)}
+footer{border-top:1px solid var(--line);padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));flex:none;display:flex;gap:7px;flex-wrap:wrap}
+footer button{flex:1;min-width:76px;font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 6px;cursor:pointer;background:var(--acc);color:#06121a;font-size:13.5px;transition:transform .1s}
+footer button:active{transform:scale(.96)}
+footer button.sec{background:transparent;border:1px solid var(--line);color:var(--ink);font-weight:500}
+footer button:disabled{opacity:.4}
+#setup{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;gap:14px}
+#setup h1{font-size:30px;margin:0}
+#setup p{color:var(--dim);margin:0;font-size:14px;max-width:320px}
+#setup input{width:100%;max-width:280px;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px;font:inherit;text-align:center}
+#setup button{background:var(--acc);color:#06121a;border:0;border-radius:999px;padding:13px 28px;font:inherit;font-weight:800;cursor:pointer}
+#setup button.cont{background:transparent;border:1px solid var(--acc);color:var(--acc)}
+#end{display:none;flex-direction:column;gap:12px;padding:20px;overflow:auto}
+#end h2{margin:0;font-size:24px}
+#end ul{margin:0;padding-left:18px;color:var(--dim);font-size:14px;overflow:auto}
+#end button{background:var(--acc);color:#06121a;border:0;border-radius:999px;padding:14px;font:inherit;font-weight:800;cursor:pointer;margin-top:6px}
+.hidden{display:none !important}
+#assets{display:none;position:fixed;inset:0;background:var(--bg);z-index:20;flex-direction:column;max-width:480px;margin:0 auto}
+#assets .ahd{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line);flex:none}
+#assets .ahd h2{margin:0;font-size:19px;flex:1}
+#assets .ahd button{background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;width:34px;height:34px;font-size:18px;cursor:pointer}
+#assets .abody{flex:1;overflow:auto;padding:14px}
+#assets .net{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px;text-align:center}
+#assets .net b{display:block;font-size:20px;color:#ffcf5c}
+#assets .net span{font-size:12px;color:var(--dim)}
+.asec{margin-bottom:16px}
+.asec h3{font-size:13px;color:var(--acc);margin:0 0 8px;text-transform:uppercase;letter-spacing:.03em}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.item .ic{font-size:22px;flex:none}
+.item .inf{flex:1;min-width:0}
+.item .inf b{display:block;font-size:14px}
+.item .inf span{font-size:12px;color:var(--dim);display:block}
+.item .inf span.up{color:var(--good)}
+.item .inf span.down{color:var(--bad)}
+.item button{flex:none;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 10px;font:inherit;font-size:12px;cursor:pointer}
+.empty-note{color:var(--dim);font-size:13px;padding:4px 2px 2px}
+#buyBtnWrap{padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);flex:none}
+#buyBtnWrap button{width:100%;background:var(--acc);color:#06121a;border:0;border-radius:999px;padding:14px;font:inherit;font-weight:800;cursor:pointer;font-size:15px}
+.shop-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.shop-tabs button{flex:none;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer}
+.shop-tabs button.on{border-color:var(--acc);color:var(--acc)}
+.item .buy{border-color:var(--acc);color:var(--acc)}
+.item button:disabled{opacity:.35}
+.stock-row{display:flex;gap:8px;margin-top:6px}
+.stock-row button{flex:1;padding:8px 4px;font-size:12px}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="setup">
+<h1>🌱 LifeSim</h1>
+<p>Live a randomly generated life, one year at a time. Make choices, build a career and a family, see how it turns out.</p>
+<div id="contWrap" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px"></div>
+<input id="nameInput" maxlength="24" placeholder="Name your character (optional)">
+<button id="startBtn">Begin new life</button>
+<p style="font-size:12px">Your current life is saved on this device only — nothing is sent anywhere.</p>
+</div>
+
+<div id="game" class="hidden" style="display:contents">
+<header>
+<a href="games.html">← Games</a>
+<div class="who"><div class="name" id="hName"></div><div class="status" id="hStatus"></div></div>
+<span class="age" id="hAge"></span>
+</header>
+<div id="stats">
+<div class="stat"><b>Health</b><div class="bar"><i id="barHealth"></i></div></div>
+<div class="stat"><b>Happy</b><div class="bar"><i id="barHappy"></i></div></div>
+<div class="stat"><b>Smarts</b><div class="bar"><i id="barSmarts"></i></div></div>
+<div class="stat money"><b>Money</b><div class="money-val" id="moneyVal">$0</div></div>
+</div>
+<main><div id="log"></div></main>
+<footer id="actions">
+<button id="ageBtn">Age up ⏩</button>
+<button class="sec" id="jobBtn">Job</button>
+<button class="sec" id="familyBtn">Family</button>
+<button class="sec" id="assetsBtn">Assets</button>
+<button class="sec" id="activityBtn">Activities</button>
+</footer>
+</div>
+
+<div id="assets">
+<div class="ahd"><h2 id="assetsTitle">Assets</h2><button id="assetsClose" aria-label="Close">×</button></div>
+<div class="abody" id="assetsOwned">
+<div class="net"><span>Total asset value</span><b id="netWorthVal">$0</b></div>
+<div class="asec"><h3>🏠 Property</h3><div id="listProperty"></div></div>
+<div class="asec"><h3>💍 Jewelry</h3><div id="listJewelry"></div></div>
+<div class="asec"><h3>🚗 Cars</h3><div id="listCars"></div></div>
+<div class="asec"><h3>📈 Stocks</h3><div id="listStocks"></div></div>
+</div>
+<div class="abody hidden" id="assetsShop">
+<div class="shop-tabs" id="shopTabs"></div>
+<div id="shopList"></div>
+</div>
+<div id="buyBtnWrap"><button id="buyMoreBtn">🛒 Buy more</button></div>
+</div>
+
+<div id="end">
+<h2 id="endTitle"></h2>
+<p id="endSummary" style="color:var(--dim);font-size:14px"></p>
+<p style="font-weight:700;margin:0">Life highlights</p>
+<ul id="endList"></ul>
+<button id="againBtn">Live another life</button>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var S, logEl=document.getElementById("log");
+var SAVE_KEY="zf_lifesim_save_v2";
+
+function clamp(n){return Math.max(0,Math.min(100,Math.round(n)))}
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function pick(arr){return arr[rnd(0,arr.length-1)]}
+function fmt(n){n=Math.round(n);return (n<0?"-$":"$")+Math.abs(n).toLocaleString()}
+
+function save(){
+ if(!S || !S.alive) return;
+ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){}
+}
+function loadSave(){
+ try{ var raw=localStorage.getItem(SAVE_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+}
+function clearSave(){
+ try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+}
+
+var JOBS=[
+ {title:"Grocery clerk",min:0,pay:[14000,20000]},
+ {title:"Barista",min:0,pay:[16000,22000]},
+ {title:"Delivery driver",min:0,pay:[18000,26000]},
+ {title:"Office assistant",min:35,pay:[26000,34000]},
+ {title:"Sales rep",min:30,pay:[28000,45000]},
+ {title:"Teacher",min:55,pay:[38000,52000]},
+ {title:"Nurse",min:60,pay:[50000,72000]},
+ {title:"Accountant",min:60,pay:[48000,68000]},
+ {title:"Software developer",min:70,pay:[60000,95000]},
+ {title:"Engineer",min:75,pay:[65000,100000]},
+ {title:"Lawyer",min:85,pay:[80000,160000]},
+ {title:"Doctor",min:88,pay:[120000,220000]},
+ {title:"Scientist",min:80,pay:[70000,130000]}
+];
+
+var PROPERTY_CATALOG=[
+ {id:"apt",name:"Rental Apartment",price:80000,rent:6000,icon:"🏢"},
+ {id:"duplex",name:"Duplex",price:150000,rent:11000,icon:"🏘️"},
+ {id:"house",name:"Single-Family House",price:220000,rent:15000,icon:"🏡"},
+ {id:"condo",name:"Beach Condo",price:300000,rent:20000,icon:"🏖️"}
+];
+var JEWELRY_CATALOG=[
+ {id:"watch",name:"Nice Watch",price:2000,happy:4,icon:"⌚"},
+ {id:"necklace",name:"Gold Necklace",price:4000,happy:5,icon:"📿"},
+ {id:"ring",name:"Diamond Ring",price:8000,happy:8,icon:"💍"},
+ {id:"bracelet",name:"Luxury Bracelet",price:15000,happy:10,icon:"✨"}
+];
+var CAR_CATALOG=[
+ {id:"sedan",name:"Used Sedan",price:6000,happy:5,icon:"🚙"},
+ {id:"suv",name:"SUV",price:22000,happy:7,icon:"🚐"},
+ {id:"sports",name:"Sports Car",price:55000,happy:12,icon:"🏎️"},
+ {id:"luxury",name:"Luxury Sedan",price:85000,happy:10,icon:"🚘"}
+];
+var STOCK_CATALOG=[
+ {sym:"NOVA",name:"Nova Tech",base:50},
+ {sym:"ORBT",name:"Orbit Corp",base:120},
+ {sym:"LUNR",name:"Lunar Minerals",base:20},
+ {sym:"STLR",name:"Stellar Foods",base:35},
+ {sym:"QNTM",name:"Quantum Systems",base:200}
+];
+
+function newLife(name){
+ var market={};
+ STOCK_CATALOG.forEach(function(s){market[s.sym]=s.base});
+ return {
+  name: name || pick(["Alex","Sam","Jordan","Riley","Casey","Morgan","Taylor","Jamie","Avery","Quinn","Nova","Eli"]),
+  age:0, health:clamp(rnd(70,100)), happy:clamp(rnd(60,100)), smarts:clamp(rnd(30,70)),
+  money: 0, job:null, jobYears:0, alive:true, events:[],
+  partner:null, married:false, kids:0,
+  assets:{properties:[],jewelry:[],cars:[],stocks:[]},
+  market:market
+ };
+}
+
+function statusLine(){
+ var bits=[];
+ if(S.job) bits.push(S.job.title);
+ if(S.married) bits.push("Married to "+S.partner);
+ else if(S.partner) bits.push("Dating "+S.partner);
+ if(S.kids>0) bits.push(S.kids+(S.kids===1?" child":" children"));
+ return bits.join(" · ")||"Just starting out";
+}
+
+function render(){
+ document.getElementById("hName").textContent=S.name;
+ document.getElementById("hStatus").textContent=statusLine();
+ document.getElementById("hAge").textContent="Age "+S.age;
+ document.getElementById("barHealth").style.width=S.health+"%";
+ document.getElementById("barHappy").style.width=S.happy+"%";
+ document.getElementById("barSmarts").style.width=S.smarts+"%";
+ document.getElementById("moneyVal").textContent=fmt(S.money);
+ document.getElementById("jobBtn").textContent=S.job?"Job ✓":"Job";
+ document.getElementById("ageBtn").disabled=!S.alive;
+}
+
+function addLog(text, cls){
+ S.events.push({age:S.age, text:text});
+ var d=document.createElement("div");
+ d.className="ev"+(cls?" "+cls:"");
+ d.innerHTML='<span class="ag">Age '+S.age+'</span>'+text;
+ logEl.insertBefore(d, logEl.firstChild);
+ return d;
+}
+
+function offerChoice(prompt, options){
+ var d=addLog(prompt);
+ var box=document.createElement("div");
+ box.className="choices";
+ options.forEach(function(opt){
+  var b=document.createElement("button");
+  b.textContent=opt.label;
+  b.onclick=function(){
+   box.remove();
+   var res=opt.effect();
+   if(res){ var r=document.createElement("div"); r.style.marginTop="8px"; r.style.color="var(--dim)"; r.style.fontSize="13px"; r.textContent=res; d.appendChild(r); }
+   checkDeath();
+   render();
+   save();
+  };
+  box.appendChild(b);
+ });
+ d.appendChild(box);
+ document.getElementById("ageBtn").disabled=true;
+}
+
+var BABY_EVENTS=[
+ function(){S.happy=clamp(S.happy+rnd(0,5));return "🍼 You took your first steps. Everyone cheered."},
+ function(){S.smarts=clamp(S.smarts+rnd(1,4));return "🗣️ You said your first word. It was probably \"no.\""},
+ function(){S.health=clamp(S.health+rnd(-5,5));return "🤧 A mild cold went around the house. You recovered quickly."},
+ function(){S.happy=clamp(S.happy+rnd(2,6));return "🎂 Your first birthday party was full of cake and chaos."},
+ function(){S.smarts=clamp(S.smarts+rnd(1,3));return "🧸 You started recognizing shapes and colors."}
+];
+var CHILD_EVENTS=[
+ function(){S.smarts=clamp(S.smarts+rnd(2,6));return "📚 You did well in school this year."},
+ function(){S.happy=clamp(S.happy+rnd(3,8));return "🤝 You made a new best friend at school."},
+ function(){S.happy=clamp(S.happy-rnd(2,6));return "😔 A classmate was unkind to you. It stung for a while."},
+ function(){S.smarts=clamp(S.smarts+rnd(1,3));S.happy=clamp(S.happy+rnd(1,4));return "🎨 You discovered a hobby you really love."},
+ function(){S.health=clamp(S.health+rnd(2,6));return "⚽ You joined a sports team and got more active."},
+ function(){S.happy=clamp(S.happy+rnd(2,5));return "🐶 Your family got a pet, and you adore it."},
+ function(){S.smarts=clamp(S.smarts-rnd(1,4));return "😴 You daydreamed through most of the school year."}
+];
+var TEEN_EVENTS=[
+ function(){S.happy=clamp(S.happy+rnd(2,7));return "☀️ You and your friends had a great summer."},
+ function(){S.smarts=clamp(S.smarts+rnd(2,5));return "📈 You studied hard and your grades improved."},
+ function(){S.happy=clamp(S.happy-rnd(3,9));return "💔 A friendship fell apart over something silly."},
+ function(){S.health=clamp(S.health-rnd(2,6));return "🌙 Growing pains, late nights, the usual teenage wear and tear."},
+ function(){S.smarts=clamp(S.smarts+rnd(3,7));return "🏆 You won a school competition you worked hard for."},
+ function(){S.happy=clamp(S.happy+rnd(1,5));S.health=clamp(S.health+rnd(1,4));return "🎸 You picked up a new hobby that's become a real outlet."},
+ function(){var l=rnd(20,150);S.money=Math.max(0,S.money-l);S.happy=clamp(S.happy+3);return "🎟️ You spent "+fmt(l)+" on a concert with friends. Worth it."}
+];
+var ADULT_EVENTS=[
+ function(){S.happy=clamp(S.happy+rnd(2,6));return "📞 You reconnected with an old friend."},
+ function(){S.health=clamp(S.health-rnd(2,7));return "💼 Work stress crept into your health a little this year."},
+ function(){var g=rnd(200,1500);S.money+=g;return "💸 An unexpected refund landed in your account: "+fmt(g)+"."},
+ function(){var l=rnd(100,900);S.money=Math.max(0,S.money-l);return "🔧 An appliance broke and cost you "+fmt(l)+" to fix."},
+ function(){S.happy=clamp(S.happy+rnd(3,8));return "✈️ You took a trip somewhere you'd always wanted to go."},
+ function(){S.smarts=clamp(S.smarts+rnd(2,5));return "🎓 You picked up a new skill in your spare time."},
+ function(){S.health=clamp(S.health+rnd(2,6));return "🏃 You got into a good fitness routine this year."},
+ function(){var l=rnd(300,1800);S.money=Math.max(0,S.money-l);S.happy=clamp(S.happy-2);return "🚗 Car trouble cost you "+fmt(l)+" this year."}
+];
+var SENIOR_EVENTS=[
+ function(){S.happy=clamp(S.happy+rnd(2,6));return "🌻 You spent the year enjoying old hobbies and good company."},
+ function(){S.health=clamp(S.health-rnd(3,9));return "🦴 Age caught up with you a little more this year."},
+ function(){S.happy=clamp(S.happy+rnd(3,8));return "👨‍👩‍👧 Family visited often and it made your year."},
+ function(){S.happy=clamp(S.happy+rnd(2,5));return "📖 You finally had time for all the books you'd put off."},
+ function(){S.health=clamp(S.health+rnd(1,4));return "🚶 A daily walk became part of your routine."}
+];
+
+function stageEvents(age){
+ if(age<=3) return BABY_EVENTS;
+ if(age<=12) return CHILD_EVENTS;
+ if(age<=19) return TEEN_EVENTS;
+ if(age<=64) return ADULT_EVENTS;
+ return SENIOR_EVENTS;
+}
+
+var PARTNER_NAMES=["Robin","Jesse","Charlie","Drew","Skyler","Harper","Reese","Finley","Rowan","Emerson"];
+
+function maybeChoiceEvent(age){
+ if(age===6){
+  offerChoice("Your teacher asks the class to pick an after-school activity.", [
+   {label:"Join the chess club", effect:function(){S.smarts=clamp(S.smarts+6);return "Your smarts grew."}},
+   {label:"Join the soccer team", effect:function(){S.health=clamp(S.health+6);S.happy=clamp(S.happy+3);return "Your health and happiness grew."}}
+  ]);
+  return true;
+ }
+ if(age===10 && Math.random()<0.5){
+  offerChoice("You're given the chance to care for a pet.", [
+   {label:"Take care of it", effect:function(){S.happy=clamp(S.happy+8);return "Having something to care for made you happier."}},
+   {label:"Not interested", effect:function(){S.smarts=clamp(S.smarts+2);return "You spent the time on other things instead."}}
+  ]);
+  return true;
+ }
+ if(age===16){
+  offerChoice("You're offered a part-time job after school.", [
+   {label:"Take the job", effect:function(){var p=rnd(2000,5000);S.money+=p;S.happy=clamp(S.happy-2);return "You earned "+fmt(p)+" but had less free time."}},
+   {label:"Focus on school instead", effect:function(){S.smarts=clamp(S.smarts+5);return "Your grades improved."}}
+  ]);
+  return true;
+ }
+ if(age===18){
+  offerChoice("You're finishing school. What's next?", [
+   {label:"Go to university", effect:function(){S.smarts=clamp(S.smarts+rnd(10,18));S.money-=rnd(2000,6000);return "Years of study paid off, though it cost you."}},
+   {label:"Start working right away", effect:function(){var p=rnd(1000,3000);S.money+=p;return "You jumped straight into the workforce."}}
+  ]);
+  return true;
+ }
+ if(age>=24 && age<=55 && !S.partner && Math.random()<0.22){
+  var pn=pick(PARTNER_NAMES);
+  offerChoice("You meet someone named "+pn+" and really hit it off.", [
+   {label:"Pursue it", effect:function(){S.partner=pn;S.happy=clamp(S.happy+10);return "You and "+pn+" started dating."}},
+   {label:"Not right now", effect:function(){return "You decided to leave it be, for now."}}
+  ]);
+  return true;
+ }
+ if(age===45 && Math.random()<0.4){
+  offerChoice("A big career opportunity appears, but it's risky.", [
+   {label:"Take the risk", effect:function(){ if(Math.random()<0.55){var p=rnd(10000,40000);S.money+=p;return "It paid off! +"+fmt(p)+"."} else {var l=rnd(3000,12000);S.money=Math.max(0,S.money-l);return "It didn't pan out. -"+fmt(l)+"."} }},
+   {label:"Play it safe", effect:function(){S.happy=clamp(S.happy+2);return "You kept things steady."}}
+  ]);
+  return true;
+ }
+ if(age===60 && S.job){
+  offerChoice("You start thinking about retirement.", [
+   {label:"Retire now", effect:function(){S.job=null;S.jobYears=0;S.happy=clamp(S.happy+8);return "You retired. More free time, less income."}},
+   {label:"Keep working a while longer", effect:function(){S.money+=rnd(1000,3000);return "You decided to stay in the workforce."}}
+  ]);
+  return true;
+ }
+ return false;
+}
+
+function deathChance(age){
+ if(age<18) return 0.0005;
+ if(age<50) return 0.0008+age*0.00012;
+ if(age<70) return 0.008+(age-50)*0.0035;
+ if(age<90) return 0.07+(age-70)*0.02;
+ return 0.5+(age-90)*0.05;
+}
+
+function checkDeath(){
+ if(!S.alive) return;
+ var hRisk = S.health<=0 ? 1 : (S.health<20 ? 0.12 : 0.01);
+ var chance = deathChance(S.age) + hRisk;
+ if(Math.random()<chance || S.health<=0){
+  die();
+ }
+}
+
+function die(){
+ S.alive=false;
+ var cause;
+ if(S.health<=15) cause="ill health";
+ else if(S.age>=75) cause=pick(["natural causes","a peaceful passing in their sleep","old age"]);
+ else if(S.age<18) cause=pick(["a sudden accident","an unexpected illness"]);
+ else cause=pick(["natural causes","an unexpected illness","an accident"]);
+ addLog("💀 <b>"+S.name+" passed away at age "+S.age+"</b>, from "+cause+".", "death");
+ render();
+ clearSave();
+ setTimeout(showEnd, 500);
+}
+
+function showEnd(){
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("game").style.display="none";
+ var end=document.getElementById("end");
+ end.style.display="flex";
+ document.getElementById("endTitle").textContent=S.name+"'s Life";
+ var fam = S.married ? ("Married to "+S.partner+(S.kids?", "+S.kids+(S.kids===1?" child":" children"):"")+". ") : "";
+ document.getElementById("endSummary").textContent="Lived to age "+S.age+" with "+fmt(S.money)+" to their name. "+fam;
+ var ul=document.getElementById("endList");
+ ul.innerHTML="";
+ var picks=S.events.slice(-8).reverse();
+ picks.forEach(function(e){var li=document.createElement("li");li.textContent="Age "+e.age+": "+e.text.replace(/<[^>]+>/g,"");ul.appendChild(li)});
+}
+
+function ageUp(){
+ if(!S.alive) return;
+ S.age++;
+ S.health=clamp(S.health - (S.age>60?rnd(0,3):rnd(-1,1)));
+ var usedChoice=maybeChoiceEvent(S.age);
+ if(!usedChoice){
+  var pool=stageEvents(S.age);
+  var msg=pick(pool)();
+  addLog(msg);
+ }
+ if(S.job && S.age>=18){
+  S.jobYears++;
+  S.money+=Math.round(S.job.salary);
+  if(S.jobYears>0 && S.jobYears%4===0 && Math.random()<0.5){
+   var raise=Math.round(S.job.salary*0.12);
+   S.job.salary+=raise;
+   addLog("📈 Your hard work earned you a raise! Salary up by "+fmt(raise)+"/yr.", "good");
+  }
+ }
+ if(S.assets){
+  var rentTotal=0;
+  S.assets.properties.forEach(function(p){rentTotal+=p.rent});
+  if(rentTotal>0){ S.money+=rentTotal; addLog("🏠 Collected "+fmt(rentTotal)+" in rental income.", "good"); }
+  Object.keys(S.market).forEach(function(sym){
+   var chg=(rnd(-1500,2000))/10000;
+   S.market[sym]=Math.max(1, +(S.market[sym]*(1+chg)).toFixed(2));
+  });
+ }
+ checkDeath();
+ render();
+ save();
+}
+
+function openJobs(){
+ if(!S.alive) return;
+ if(S.age<16){ addLog("You're too young to work yet."); return; }
+ var avail=JOBS.filter(function(j){return S.smarts>=j.min});
+ var opts=avail.slice(-5).map(function(j){
+  return {label:j.title+" ("+fmt(j.pay[0])+"–"+fmt(j.pay[1])+"/yr)", effect:function(){
+   S.job={title:j.title, salary:rnd(j.pay[0],j.pay[1])};
+   S.jobYears=0;
+   return "You're now working as a "+j.title+".";
+  }};
+ });
+ if(S.job) opts.push({label:"Quit working", effect:function(){S.job=null;S.jobYears=0;return "You left your job."}});
+ offerChoice("Choose a job to apply for:", opts);
+}
+
+function openFamily(){
+ if(!S.alive) return;
+ if(!S.partner){
+  offerChoice("You're currently single. What would you like to do?", [
+   {label:"Try to meet someone", effect:function(){
+     if(S.age<18){return "You're too young for that right now."}
+     if(Math.random()<0.4){ var pn=pick(PARTNER_NAMES); S.partner=pn; S.happy=clamp(S.happy+8); return "You met "+pn+" and started dating!"; }
+     return "No luck this time — maybe next year.";
+   }},
+   {label:"Focus on yourself instead", effect:function(){S.happy=clamp(S.happy+3);return "You spent the time on your own goals."}}
+  ]);
+  return;
+ }
+ if(!S.married){
+  offerChoice("Things with "+S.partner+" are going well.", [
+   {label:"Propose marriage", effect:function(){
+     if(Math.random()<0.75){S.married=true;S.happy=clamp(S.happy+15);return S.partner+" said yes! You're married."}
+     S.happy=clamp(S.happy-5);return S.partner+" wasn't ready yet. Awkward, but you're still together.";
+   }},
+   {label:"Break up", effect:function(){var p=S.partner;S.partner=null;S.happy=clamp(S.happy-8);return "You and "+p+" went your separate ways."}},
+   {label:"Keep things as they are", effect:function(){return "You enjoyed another year together."}}
+  ]);
+  return;
+ }
+ offerChoice("You and "+S.partner+" are married"+(S.kids?" with "+S.kids+(S.kids===1?" child":" children"):"")+".", [
+  {label:"Have a child", effect:function(){
+    if(S.money<500){return "Money's too tight for that right now."}
+    S.kids++;S.money-=rnd(500,2000);S.happy=clamp(S.happy+10);S.health=clamp(S.health-3);
+    return "You welcomed a new child into the family!";
+  }},
+  {label:"Plan a trip together", effect:function(){var c=rnd(500,2500);S.money=Math.max(0,S.money-c);S.happy=clamp(S.happy+8);return "A getaway with "+S.partner+" cost "+fmt(c)+" but was worth it."}},
+  {label:"Divorce", effect:function(){var p=S.partner;S.partner=null;S.married=false;S.happy=clamp(S.happy-12);S.money=Math.max(0,S.money-rnd(1000,5000));return "You and "+p+" divorced."}},
+  {label:"Keep things as they are", effect:function(){S.happy=clamp(S.happy+2);return "A quiet, happy year together."}}
+ ]);
+}
+
+function netWorth(){
+ var n=S.money;
+ S.assets.properties.forEach(function(p){n+=p.price});
+ S.assets.jewelry.forEach(function(j){n+=j.price});
+ S.assets.cars.forEach(function(c){n+=c.price});
+ S.assets.stocks.forEach(function(st){n+=st.shares*(S.market[st.sym]||0)});
+ return n;
+}
+
+function itemRow(icon,title,sub,subCls,btnLabel,onBtn){
+ var d=document.createElement("div");d.className="item";
+ d.innerHTML='<div class="ic">'+icon+'</div><div class="inf"><b></b><span class="'+(subCls||"")+'"></span></div>';
+ d.querySelector("b").textContent=title;
+ d.querySelector("span").textContent=sub;
+ if(btnLabel){
+  var b=document.createElement("button");b.textContent=btnLabel;b.onclick=onBtn;d.appendChild(b);
+ }
+ return d;
+}
+
+function renderOwned(){
+ document.getElementById("netWorthVal").textContent=fmt(netWorth());
+ var pc=document.getElementById("listProperty");pc.innerHTML="";
+ if(!S.assets.properties.length) pc.innerHTML='<div class="empty-note">No property owned yet.</div>';
+ S.assets.properties.forEach(function(p,i){
+  pc.appendChild(itemRow(p.icon,p.name,"Rents for "+fmt(p.rent)+"/yr",null,"Sell",function(){
+   S.money+=Math.round(p.price*0.8);
+   addLog("🏠 Sold "+p.name+" for "+fmt(Math.round(p.price*0.8))+".");
+   S.assets.properties.splice(i,1);render();renderOwned();save();
+  }));
+ });
+ var jc=document.getElementById("listJewelry");jc.innerHTML="";
+ if(!S.assets.jewelry.length) jc.innerHTML='<div class="empty-note">No jewelry owned yet.</div>';
+ S.assets.jewelry.forEach(function(j,i){
+  jc.appendChild(itemRow(j.icon,j.name,fmt(j.price),null,"Sell",function(){
+   S.money+=Math.round(j.price*0.8);
+   addLog("💍 Sold "+j.name+" for "+fmt(Math.round(j.price*0.8))+".");
+   S.assets.jewelry.splice(i,1);render();renderOwned();save();
+  }));
+ });
+ var cc=document.getElementById("listCars");cc.innerHTML="";
+ if(!S.assets.cars.length) cc.innerHTML='<div class="empty-note">No cars owned yet.</div>';
+ S.assets.cars.forEach(function(c,i){
+  cc.appendChild(itemRow(c.icon,c.name,fmt(c.price),null,"Sell",function(){
+   S.money+=Math.round(c.price*0.8);
+   addLog("🚗 Sold "+c.name+" for "+fmt(Math.round(c.price*0.8))+".");
+   S.assets.cars.splice(i,1);render();renderOwned();save();
+  }));
+ });
+ var sc=document.getElementById("listStocks");sc.innerHTML="";
+ if(!S.assets.stocks.length) sc.innerHTML='<div class="empty-note">No stocks owned yet.</div>';
+ S.assets.stocks.forEach(function(st,i){
+  var price=S.market[st.sym]||0;
+  var val=st.shares*price;
+  var gain=val-(st.shares*st.avgCost);
+  var pct=st.avgCost>0?(gain/(st.shares*st.avgCost)*100):0;
+  var sub=st.shares.toFixed(2)+" sh @ "+fmt(price)+" · "+(gain>=0?"+":"")+fmt(gain)+" ("+(pct>=0?"+":"")+pct.toFixed(1)+"%)";
+  sc.appendChild(itemRow("📈",st.sym+" — "+fmt(val),sub,gain>=0?"up":"down","Sell",function(){
+   S.money+=Math.round(val);
+   addLog("📈 Sold "+st.shares.toFixed(2)+" shares of "+st.sym+" for "+fmt(val)+".");
+   S.assets.stocks.splice(i,1);render();renderOwned();save();
+  }));
+ });
+}
+
+var shopCat="property";
+function renderShopTabs(){
+ var tabs=[["property","🏠 Property"],["jewelry","💍 Jewelry"],["cars","🚗 Cars"],["stocks","📈 Stocks"]];
+ var wrap=document.getElementById("shopTabs");wrap.innerHTML="";
+ tabs.forEach(function(t){
+  var b=document.createElement("button");b.textContent=t[1];if(t[0]===shopCat)b.className="on";
+  b.onclick=function(){shopCat=t[0];renderShopTabs();renderShopList()};
+  wrap.appendChild(b);
+ });
+}
+function renderShopList(){
+ var list=document.getElementById("shopList");list.innerHTML="";
+ if(shopCat==="property"){
+  PROPERTY_CATALOG.forEach(function(p){
+   var afford=S.money>=p.price;
+   var row=itemRow(p.icon,p.name,fmt(p.price)+" · rents "+fmt(p.rent)+"/yr",null,"Buy",function(){
+    S.money-=p.price;S.assets.properties.push({name:p.name,price:p.price,rent:p.rent,icon:p.icon});
+    addLog(p.icon+" You bought "+p.name+" for "+fmt(p.price)+".");
+    render();renderOwned();renderShopList();save();
+   });
+   row.querySelector("button").disabled=!afford;row.querySelector("button").className="buy";
+   list.appendChild(row);
+  });
+ } else if(shopCat==="jewelry"){
+  JEWELRY_CATALOG.forEach(function(j){
+   var afford=S.money>=j.price;
+   var row=itemRow(j.icon,j.name,fmt(j.price),null,"Buy",function(){
+    S.money-=j.price;S.happy=clamp(S.happy+j.happy);S.assets.jewelry.push({name:j.name,price:j.price,icon:j.icon});
+    addLog(j.icon+" You bought a "+j.name+" for "+fmt(j.price)+".");
+    render();renderOwned();renderShopList();save();
+   });
+   row.querySelector("button").disabled=!afford;row.querySelector("button").className="buy";
+   list.appendChild(row);
+  });
+ } else if(shopCat==="cars"){
+  CAR_CATALOG.forEach(function(c){
+   var afford=S.money>=c.price;
+   var row=itemRow(c.icon,c.name,fmt(c.price),null,"Buy",function(){
+    S.money-=c.price;S.happy=clamp(S.happy+c.happy);S.assets.cars.push({name:c.name,price:c.price,icon:c.icon});
+    addLog(c.icon+" You bought a "+c.name+" for "+fmt(c.price)+".");
+    render();renderOwned();renderShopList();save();
+   });
+   row.querySelector("button").disabled=!afford;row.querySelector("button").className="buy";
+   list.appendChild(row);
+  });
+ } else {
+  STOCK_CATALOG.forEach(function(s){
+   var price=S.market[s.sym]||s.base;
+   var d=document.createElement("div");d.className="item";d.style.flexDirection="column";d.style.alignItems="stretch";
+   d.innerHTML='<div style="display:flex;gap:10px;align-items:center"><div class="ic">📈</div><div class="inf"><b>'+s.sym+' — '+s.name+'</b><span>'+fmt(price)+' / share</span></div></div>';
+   var row=document.createElement("div");row.className="stock-row";
+   [500,1000,5000].forEach(function(amt){
+    var b=document.createElement("button");b.textContent="Buy "+fmt(amt);b.disabled=S.money<amt;
+    b.onclick=function(){
+     var shares=+(amt/price).toFixed(4);
+     S.money-=amt;
+     var existing=S.assets.stocks.filter(function(x){return x.sym===s.sym})[0];
+     if(existing){ var totalCost=existing.avgCost*existing.shares+amt; existing.shares+=shares; existing.avgCost=totalCost/existing.shares; }
+     else S.assets.stocks.push({sym:s.sym,shares:shares,avgCost:price});
+     addLog("📈 Bought "+shares+" shares of "+s.sym+" for "+fmt(amt)+".");
+     render();renderOwned();renderShopList();save();
+    };
+    row.appendChild(b);
+   });
+   d.appendChild(row);
+   list.appendChild(d);
+  });
+ }
+}
+
+function openAssets(){
+ if(!S.alive) return;
+ renderOwned();
+ document.getElementById("assetsOwned").classList.remove("hidden");
+ document.getElementById("assetsShop").classList.add("hidden");
+ document.getElementById("assetsTitle").textContent="Assets";
+ document.getElementById("buyMoreBtn").textContent="🛒 Buy more";
+ document.getElementById("assets").style.display="flex";
+}
+document.getElementById("assetsClose").onclick=function(){
+ if(!document.getElementById("assetsShop").classList.contains("hidden")){
+  document.getElementById("assetsOwned").classList.remove("hidden");
+  document.getElementById("assetsShop").classList.add("hidden");
+  document.getElementById("assetsTitle").textContent="Assets";
+  document.getElementById("buyMoreBtn").textContent="🛒 Buy more";
+  return;
+ }
+ document.getElementById("assets").style.display="none";
+};
+document.getElementById("buyMoreBtn").onclick=function(){
+ var shopHidden=document.getElementById("assetsShop").classList.contains("hidden");
+ if(shopHidden){
+  document.getElementById("assetsOwned").classList.add("hidden");
+  document.getElementById("assetsShop").classList.remove("hidden");
+  document.getElementById("assetsTitle").textContent="Buy more";
+  document.getElementById("buyMoreBtn").textContent="← Back to assets";
+  renderShopTabs();renderShopList();
+ } else {
+  document.getElementById("assetsOwned").classList.remove("hidden");
+  document.getElementById("assetsShop").classList.add("hidden");
+  document.getElementById("assetsTitle").textContent="Assets";
+  document.getElementById("buyMoreBtn").textContent="🛒 Buy more";
+ }
+};
+document.getElementById("assetsBtn").onclick=openAssets;
+
+function openActivities(){
+ if(!S.alive) return;
+ offerChoice("What would you like to do this year?", [
+  {label:"Exercise (+Health, -Happy a little)", effect:function(){S.health=clamp(S.health+8);S.happy=clamp(S.happy-2);return "You feel stronger."}},
+  {label:"Study (+Smarts)", effect:function(){S.smarts=clamp(S.smarts+6);return "You learned something new."}},
+  {label:"Relax (+Happy)", effect:function(){S.happy=clamp(S.happy+8);return "You took it easy and felt better for it."}},
+  {label:"See a doctor (+Health, -Money)", effect:function(){var c=rnd(50,300);S.money=Math.max(0,S.money-c);S.health=clamp(S.health+10);return "Checkup done, cost "+fmt(c)+"."}}
+ ]);
+}
+
+function beginGameUI(){
+ document.getElementById("setup").style.display="none";
+ document.getElementById("game").classList.remove("hidden");
+ document.getElementById("game").style.display="contents";
+ logEl.innerHTML="";
+}
+
+document.getElementById("startBtn").onclick=function(){
+ S=newLife(document.getElementById("nameInput").value.trim());
+ beginGameUI();
+ addLog(S.name+" was born today.");
+ render();
+ save();
+};
+document.getElementById("ageBtn").onclick=ageUp;
+document.getElementById("jobBtn").onclick=openJobs;
+document.getElementById("familyBtn").onclick=openFamily;
+document.getElementById("activityBtn").onclick=openActivities;
+document.getElementById("againBtn").onclick=function(){
+ document.getElementById("end").style.display="none";
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("setup").style.display="flex";
+ document.getElementById("nameInput").value="";
+};
+
+(function initSetup(){
+ var existing=loadSave();
+ if(existing && existing.alive){
+  var wrap=document.getElementById("contWrap");
+  wrap.classList.remove("hidden");
+  var b=document.createElement("button");
+  b.className="cont";
+  b.textContent="Continue as "+existing.name+" (age "+existing.age+")";
+  b.onclick=function(){
+   S=existing;
+   if(!S.assets) S.assets={properties:[],jewelry:[],cars:[],stocks:[]};
+   if(!S.market){ S.market={}; STOCK_CATALOG.forEach(function(s){S.market[s.sym]=s.base}); }
+   beginGameUI();
+   (S.events||[]).slice(-20).forEach(function(e){
+    var d=document.createElement("div");
+    d.className="ev";
+    d.innerHTML='<span class="ag">Age '+e.age+'</span>'+e.text;
+    logEl.insertBefore(d, logEl.firstChild);
+   });
+   render();
+  };
+  wrap.appendChild(b);
+ }
+})();
+})();
+</script>
+</body>
+</html>
